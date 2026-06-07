@@ -47,7 +47,7 @@
   nav ul a:hover { color: var(--accent); }
 
   /* HERO */
-  #home { min-height: 100vh; display: flex; align-items: center; padding: 8rem 2.5rem 4rem; position: relative; overflow: hidden; max-width: 100%; }
+  #home { min-height: 100svh; display: flex; align-items: center; padding: clamp(5rem, 12vh, 9rem) 2.5rem clamp(3rem, 6vh, 5rem); position: relative; overflow: hidden; max-width: 100%; }
   .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(20,168,143,0.11) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 10% 80%, rgba(240,201,58,0.05) 0%, transparent 60%); }
   .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(20,168,143,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(20,168,143,0.04) 1px, transparent 1px); background-size: 60px 60px; }
   /* Background cogs */
@@ -698,6 +698,13 @@
     nav ul { display: none; }
     .hamburger { display: flex; }
     .nav-drawer { display: block; }
+    #home { padding: clamp(4.5rem, 10vh, 6rem) 1.5rem clamp(2rem, 5vh, 4rem); min-height: 100svh; }
+    .hero-content { max-width: 100%; }
+    .hero-sub { font-size: 0.95rem; }
+    .hero-ctas { gap: 0.75rem; }
+  }
+  @media (max-height: 700px) {
+    #home { min-height: auto; padding: 5rem 2.5rem 3rem; }
   }
 
 
