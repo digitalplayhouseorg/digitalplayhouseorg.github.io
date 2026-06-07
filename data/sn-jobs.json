@@ -1,14 +1,1 @@
-{
-  "data": {
-    "items": {
-      "items": [
-        {"id":"1297364","title":"Cofounder, Community & Creator positions — Tiramisu Wallet","sats":150,"ncomments":3,"createdAt":"2026-01-10T00:00:00.000Z","user":{"name":"tiramisu"}},
-        {"id":"1276883","title":"Marketing Lead — Cake Wallet · Remote","sats":210,"ncomments":2,"createdAt":"2025-12-20T00:00:00.000Z","user":{"name":"cakewallet"}},
-        {"id":"1222704","title":"Software Engineer — Cake Wallet · Remote","sats":180,"ncomments":1,"createdAt":"2025-11-15T00:00:00.000Z","user":{"name":"cakewallet"}},
-        {"id":"1214339","title":"Rust Senior Engineer — Synonym · Remote","sats":320,"ncomments":4,"createdAt":"2025-11-01T00:00:00.000Z","user":{"name":"synonym"}},
-        {"id":"1203483","title":"Founding Infrastructure Engineer — Conduit Holdings","sats":275,"ncomments":2,"createdAt":"2025-10-20T00:00:00.000Z","user":{"name":"conduit"}},
-        {"id":"1018315","title":"Multi-Sig Wallet Engineer (Freelance)","sats":95,"ncomments":1,"createdAt":"2025-06-01T00:00:00.000Z","user":{"name":"anon"}}
-      ]
-    }
-  }
-}
+{"data":{"items":{"items":[{"id":"1297364","title":"🧑‍🎤👨‍💼👨‍🏭 Cofounder, Community organizer and Creator positions !","sats":0,"ncomments":0,"createdAt":"2025-12-01T16:26:28.010Z","user":{"name":"snow88488"}},{"id":"1276883","title":"Marketing Lead","sats":0,"ncomments":0,"createdAt":"2025-11-07T11:46:15.514Z","user":{"name":"sethforprivacy"}},{"id":"1222704","title":"Software Engineer","sats":0,"ncomments":1,"createdAt":"2025-09-15T14:59:01.122Z","user":{"name":"sethforprivacy"}},{"id":"1214339","title":"Rust Senior Engineer","sats":0,"ncomments":0,"createdAt":"2025-09-09T15:05:44.808Z","user":{"name":"manwithpurpose_"}},{"id":"1203483","title":"Founding Infrastructure Engineer / Cofounder","sats":0,"ncomments":0,"createdAt":"2025-09-02T05:48:10.813Z","user":{"name":"ericfj"}},{"id":"1203239","title":"Bitcoin Builders Workaway 🌴","sats":0,"ncomments":3,"createdAt":"2025-09-02T00:05:48.313Z","user":{"name":"itsTomekK"}}]}}}
