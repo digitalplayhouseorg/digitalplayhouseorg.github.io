@@ -1,0 +1,32 @@
+<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark bg -->
+  <rect width="32" height="32" rx="6" fill="#0d1a17"/>
+  <!-- Cog 1 - large, teal -->
+  <g transform="translate(12,17)">
+    <circle r="5" fill="none" stroke="#14a88f" stroke-width="1.8"/>
+    <circle r="1.8" fill="#14a88f"/>
+    <rect x="-1.1" y="-7.8" width="2.2" height="2.8" rx="0.5" fill="#14a88f"/>
+    <rect x="-1.1" y="5" width="2.2" height="2.8" rx="0.5" fill="#14a88f"/>
+    <rect x="5" y="-1.1" width="2.8" height="2.2" rx="0.5" fill="#14a88f"/>
+    <rect x="-7.8" y="-1.1" width="2.8" height="2.2" rx="0.5" fill="#14a88f"/>
+    <rect x="3.3" y="-6.5" width="2.2" height="2.8" rx="0.5" fill="#14a88f" transform="rotate(45,4,-5)"/>
+    <rect x="-5.5" y="3.7" width="2.2" height="2.8" rx="0.5" fill="#14a88f" transform="rotate(45,-4,5)"/>
+    <rect x="3.3" y="3.7" width="2.2" height="2.8" rx="0.5" fill="#14a88f" transform="rotate(-45,4,5)"/>
+    <rect x="-5.5" y="-6.5" width="2.2" height="2.8" rx="0.5" fill="#14a88f" transform="rotate(-45,-4,-5)"/>
+  </g>
+  <!-- Cog 2 - small, accent gold -->
+  <g transform="translate(22,11)">
+    <circle r="3.5" fill="none" stroke="#f0c93a" stroke-width="1.5"/>
+    <circle r="1.2" fill="#f0c93a"/>
+    <rect x="-0.8" y="-5.8" width="1.6" height="2.3" rx="0.4" fill="#f0c93a"/>
+    <rect x="-0.8" y="3.5" width="1.6" height="2.3" rx="0.4" fill="#f0c93a"/>
+    <rect x="3.5" y="-0.8" width="2.3" height="1.6" rx="0.4" fill="#f0c93a"/>
+    <rect x="-5.8" y="-0.8" width="2.3" height="1.6" rx="0.4" fill="#f0c93a"/>
+    <rect x="2.2" y="-4.8" width="1.6" height="2.3" rx="0.4" fill="#f0c93a" transform="rotate(45,2.8,-3.8)"/>
+    <rect x="-3.8" y="2.5" width="1.6" height="2.3" rx="0.4" fill="#f0c93a" transform="rotate(45,-2.8,3.8)"/>
+    <rect x="2.2" y="2.5" width="1.6" height="2.3" rx="0.4" fill="#f0c93a" transform="rotate(-45,2.8,3.8)"/>
+    <rect x="-3.8" y="-4.8" width="1.6" height="2.3" rx="0.4" fill="#f0c93a" transform="rotate(-45,-2.8,-3.8)"/>
+  </g>
+  <!-- dp label -->
+  <text x="3" y="10" font-family="monospace" font-weight="bold" font-size="7" fill="#f0c93a" opacity="0.85">dp</text>
+</svg>

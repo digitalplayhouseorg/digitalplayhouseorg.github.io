@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Decentralised Learning Protocol — Digital Playhouse Foundation</title>
+<meta name="description" content="A Decentralised Learning Protocol for the Future of Education by Kieran Nolan.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0d7a6a;
+    --teal-dark: #085c50;
+    --teal-light: #14a88f;
+    --accent: #f0c93a;
+    --accent2: #e05a3a;
+    --off-white: #f5f2ec;
+    --dark: #0d1a17;
+    --mid: #1e3530;
+    --text-muted: #7aa89a;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark); color: var(--off-white); font-family: var(--sans); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2.5rem;
+    background: rgba(13,26,23,0.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(20,168,143,0.15);
+    gap: 0.75rem;
+  }
+  @media(max-width:600px){ nav { padding: 0.9rem 1.2rem; } }
+  .nav-logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+  .nav-wordmark { font-family: var(--mono); font-size: 0.8rem; color: var(--off-white); letter-spacing: 0.02em; line-height: 1.25; overflow: hidden; }
+  @media(max-width:480px){ .nav-wordmark { font-size: 0.68rem; } }
+  @media(max-width:360px){ .nav-wordmark span { display:none; } }
+  .nav-wordmark span { color: var(--accent); }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  nav ul a:hover { color: var(--accent); }
+
+  /* HERO */
+  #home { min-height: 100vh; display: flex; align-items: center; padding: 8rem 2.5rem 4rem; position: relative; overflow: hidden; max-width: 100%; }
+  .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(20,168,143,0.11) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 10% 80%, rgba(240,201,58,0.05) 0%, transparent 60%); }
+  .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(20,168,143,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(20,168,143,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+  /* Background cogs */
+  .bg-cog { position:absolute; opacity:0.28; pointer-events:none; }
+  .bg-cog svg { display:block; }
+  /* Positions */
+  .bg-cog-1 { top:6%;  right:12%; animation: drift-1 22s ease-in-out infinite; }
+  .bg-cog-2 { top:50%; right:24%; animation: drift-2 30s ease-in-out infinite; }
+  .bg-cog-3 { bottom:18%; right:5%;  animation: drift-3 18s ease-in-out infinite; opacity:0.22; }
+  .bg-cog-4 { bottom:8%;  left:3%;  animation: drift-4 26s ease-in-out infinite; opacity:0.24; }
+  /* Each svg group spins at its own speed */
+  .bg-cog-1 .spin-fwd { animation: cog-bg-fwd 12s linear infinite; transform-origin:50% 50%; }
+  .bg-cog-1 .spin-rev { animation: cog-bg-rev 8.5s linear infinite; transform-origin:50% 50%; }
+  .bg-cog-2 .spin-fwd { animation: cog-bg-fwd 20s linear infinite; transform-origin:50% 50%; }
+  .bg-cog-2 .spin-rev { animation: cog-bg-rev 14s linear infinite; transform-origin:50% 50%; }
+  .bg-cog-3 .spin-fwd { animation: cog-bg-fwd 8s  linear infinite; transform-origin:50% 50%; }
+  .bg-cog-4 .spin-fwd { animation: cog-bg-fwd 16s linear infinite; transform-origin:50% 50%; }
+  .bg-cog-4 .spin-rev { animation: cog-bg-rev 11s linear infinite; transform-origin:50% 50%; }
+  @keyframes cog-bg-fwd { to { transform: rotate(360deg);  } }
+  @keyframes cog-bg-rev { to { transform: rotate(-360deg); } }
+  /* Gentle drift so they don't feel static */
+  @keyframes drift-1 { 0%,100%{transform:translate(0,0)}   40%{transform:translate(-12px,18px)}  70%{transform:translate(8px,-10px)} }
+  @keyframes drift-2 { 0%,100%{transform:translate(0,0)}   35%{transform:translate(10px,-14px)}  65%{transform:translate(-8px,10px)} }
+  @keyframes drift-3 { 0%,100%{transform:translate(0,0)}   50%{transform:translate(-6px,12px)}  }
+  @keyframes drift-4 { 0%,100%{transform:translate(0,0)}   45%{transform:translate(14px,-8px)}  75%{transform:translate(-6px,14px)} }
+  .hero-content { position: relative; z-index:1; max-width: 680px; }
+  h1 { font-family:var(--mono); font-size:clamp(2.4rem,6vw,5rem); font-weight:700; line-height:1.05; letter-spacing:-0.02em; animation: fadeUp 0.6s 0.1s ease both; }
+  h1 .accent { color: var(--teal-light); }
+  h1 .block { display: block; }
+  .hero-sub { margin-top:1.5rem; font-size:1.05rem; font-weight:300; line-height:1.68; color:rgba(245,242,236,0.7); max-width:520px; animation: fadeUp 0.6s 0.2s ease both; }
+  .pillars { display:flex; align-items:center; gap:0.6rem; margin-top:2rem; font-family:var(--mono); font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase; animation: fadeUp 0.6s 0.3s ease both; }
+  .pillars span { color: var(--off-white); }
+  .pillars .sep { color: var(--teal-light); font-size:1rem; }
+  .hero-ctas { display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.5rem; animation: fadeUp 0.6s 0.4s ease both; }
+  .btn { display:inline-flex; align-items:center; gap:0.5rem; padding:0.8rem 1.6rem; font-family:var(--mono); font-size:0.78rem; letter-spacing:0.06em; text-transform:uppercase; text-decoration:none; border-radius:6px; cursor:pointer; transition:all 0.22s; border:none; }
+  .btn-primary { background:var(--teal-light); color:var(--dark); }
+  .btn-primary:hover { background:var(--accent); transform:translateY(-2px); box-shadow:0 8px 24px rgba(20,168,143,0.3); }
+  .btn-outline { background:transparent; color:var(--off-white); border:1px solid rgba(245,242,236,0.22); }
+  .btn-outline:hover { border-color:var(--teal-light); color:var(--teal-light); transform:translateY(-2px); }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  /* SECTIONS */
+  section { padding: 5.5rem 2.5rem; max-width: 1100px; margin: 0 auto; }
+  .section-label { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal-light); margin-bottom:0.9rem; }
+  h2 { font-family:var(--mono); font-size:clamp(1.8rem,4vw,2.7rem); font-weight:700; letter-spacing:-0.02em; line-height:1.1; }
+  h2 .accent { color: var(--teal-light); }
+
+  /* ABOUT */
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; margin-top:3rem; }
+  .about-text p { margin-top:1.2rem; font-weight:300; line-height:1.72; color:rgba(245,242,236,0.73); }
+  .about-text a { color:var(--teal-light); text-decoration:none; }
+  .about-text a:hover { text-decoration:underline; }
+  .impact-cards { display:flex; flex-direction:column; gap:1rem; }
+  .impact-card { display:flex; align-items:flex-start; gap:1.2rem; padding:1.4rem; background:rgba(20,168,143,0.05); border:1px solid rgba(20,168,143,0.14); border-radius:12px; transition:all 0.25s; }
+  .impact-card:hover { background:rgba(20,168,143,0.1); border-color:rgba(20,168,143,0.33); transform:translateX(5px); }
+  .impact-icon { width:40px; height:40px; flex-shrink:0; display:flex; align-items:center; justify-content:center; border-radius:8px; font-size:1.1rem; }
+  .impact-icon.l { background:rgba(240,201,58,0.12); }
+  .impact-icon.b { background:rgba(20,168,143,0.15); }
+  .impact-icon.s { background:rgba(224,90,58,0.12); }
+  .impact-card h3 { font-family:var(--mono); font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--off-white); margin-bottom:0.3rem; }
+  .impact-card p { font-size:0.86rem; font-weight:300; color:var(--text-muted); line-height:1.55; }
+  .charity-badge { display:inline-flex; align-items:center; gap:0.6rem; margin-top:1.5rem; padding:0.55rem 1rem; background:rgba(240,201,58,0.07); border:1px solid rgba(240,201,58,0.2); border-radius:8px; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.05em; color:var(--accent); text-decoration:none; transition:background 0.2s; }
+  .charity-badge:hover { background:rgba(240,201,58,0.13); }
+
+  .sep-line { border:none; border-top:1px solid rgba(20,168,143,0.1); margin: 0 2.5rem; }
+
+  /* TEAM */
+  #team { text-align:center; }
+  .team-grid { display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin-top:3rem; }
+  .team-card { width:240px; background:rgba(255,255,255,0.03); border:1px solid rgba(20,168,143,0.14); border-radius:16px; overflow:hidden; transition:all 0.3s; text-decoration:none; color:inherit; }
+  .team-card:hover { transform:translateY(-7px); border-color:var(--teal-light); box-shadow:0 20px 48px rgba(0,0,0,0.4),0 0 0 1px rgba(20,168,143,0.28); }
+  .team-img { width:100%; height:240px; object-fit:cover; object-position: center center; display:block; filter:saturate(0.88); transition:filter 0.3s; }
+  .team-card:hover .team-img { filter:saturate(1.15); }
+  .team-info { padding:1.1rem; text-align:left; }
+  .team-name { font-family:var(--mono); font-size:0.88rem; font-weight:700; letter-spacing:0.02em; }
+  .team-role { margin-top:0.2rem; font-size:0.78rem; color:var(--teal-light); font-weight:300; }
+  .team-link-hint { margin-top:0.55rem; font-size:0.7rem; font-family:var(--mono); color:var(--text-muted); display:flex; align-items:center; gap:0.3rem; }
+  .team-link-hint::after { content:"→"; color:var(--teal-light); }
+
+  /* PROJECTS */
+  .projects-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
+  .project-card { padding:2rem; background:rgba(255,255,255,0.03); border:1px solid rgba(20,168,143,0.14); border-radius:16px; transition:all 0.3s; text-decoration:none; color:inherit; display:flex; flex-direction:column; position:relative; overflow:hidden; }
+  .project-card .project-tag { margin-top:auto; padding-top:1.2rem; align-self:flex-start; }
+  @media(max-width:900px){ .projects-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:580px){ .projects-grid{ grid-template-columns:1fr; } }
+  .project-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; opacity:0.8; transition:opacity 0.3s; }
+  .project-card:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,0.3); }
+  /* Teal — Protocol/Build */
+  .pc-teal { border-color:rgba(20,168,143,0.2); }
+  .pc-teal::before { background:#14a88f; }
+  .pc-teal:hover { background:rgba(20,168,143,0.07); border-color:rgba(20,168,143,0.38); }
+  .pc-teal .project-num { color:#14a88f; }
+  .pc-teal .project-tag { background:rgba(20,168,143,0.1); color:#14a88f; border-color:rgba(20,168,143,0.25); }
+  /* Gold — Community/Donation */
+  .pc-gold { border-color:rgba(240,201,58,0.22); }
+  .pc-gold::before { background:#f0c93a; }
+  .pc-gold:hover { background:rgba(240,201,58,0.06); border-color:rgba(240,201,58,0.4); }
+  .pc-gold .project-num { color:#f0c93a; }
+  .pc-gold .project-tag { background:rgba(240,201,58,0.1); color:#c9a010; border-color:rgba(240,201,58,0.25); }
+  /* Orange — Education/Learner */
+  .pc-orange { border-color:rgba(255,136,0,0.2); }
+  .pc-orange::before { background:#ff8800; }
+  .pc-orange:hover { background:rgba(255,136,0,0.06); border-color:rgba(255,136,0,0.38); }
+  .pc-orange .project-num { color:#ff8800; }
+  .pc-orange .project-tag { background:rgba(255,136,0,0.1); color:#ff8800; border-color:rgba(255,136,0,0.25); }
+  /* Coral — Security */
+  .pc-coral { border-color:rgba(224,90,58,0.2); }
+  .pc-coral::before { background:#e05a3a; }
+  .pc-coral:hover { background:rgba(224,90,58,0.06); border-color:rgba(224,90,58,0.38); }
+  .pc-coral .project-num { color:#e05a3a; }
+  .pc-coral .project-tag { background:rgba(224,90,58,0.1); color:#e05a3a; border-color:rgba(224,90,58,0.25); }
+  /* Purple — Nostr/Decentralised */
+  .pc-purple { border-color:rgba(139,92,246,0.2); }
+  .pc-purple::before { background:#8b5cf6; }
+  .pc-purple:hover { background:rgba(139,92,246,0.06); border-color:rgba(139,92,246,0.38); }
+  .pc-purple .project-num { color:#8b5cf6; }
+  .pc-purple .project-tag { background:rgba(139,92,246,0.1); color:#a78bfa; border-color:rgba(139,92,246,0.25); }
+  .project-num { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.12em; color:var(--teal-light); margin-bottom:1rem; }
+  .project-card h3 { font-family:var(--mono); font-size:1.05rem; font-weight:700; margin-bottom:0.6rem; }
+  .project-card p { font-size:0.88rem; font-weight:300; color:rgba(245,242,236,0.63); line-height:1.62; }
+  .project-tag { display:inline-block; margin-top:1.1rem; padding:0.3rem 0.7rem; background:rgba(20,168,143,0.1); border-radius:100px; font-size:0.7rem; font-family:var(--mono); color:var(--teal-light); }
+
+  /* STACKER NEWS */
+  #stacker { padding-top:5.5rem; padding-bottom:5.5rem; }
+  .sn-header { display:flex; align-items:flex-start; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; margin-bottom:0.5rem; }
+  .sn-badge { display:inline-flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem; background:rgba(255,136,0,0.1); border:1px solid rgba(255,136,0,0.25); border-radius:100px; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:#ff8800; white-space:nowrap; align-self:flex-start; margin-top:0.5rem; }
+  .sn-description { margin-top:1rem; font-weight:300; line-height:1.7; color:rgba(245,242,236,0.7); max-width:680px; }
+
+  /* Territory hero */
+  .territory-hero { margin-top:2.5rem; background:rgba(255,136,0,0.04); border:1px solid rgba(255,136,0,0.18); border-radius:20px; overflow:hidden; }
+  .territory-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; padding:1.8rem 2rem; border-bottom:1px solid rgba(255,136,0,0.12); background:rgba(255,136,0,0.05); }
+  .territory-title { display:flex; align-items:center; gap:1rem; }
+  .territory-icon { width:48px; height:48px; background:rgba(255,136,0,0.15); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0; }
+  .territory-name { font-family:var(--mono); font-size:1.3rem; font-weight:700; }
+  .territory-name span { color:#ff8800; }
+  .territory-meta { font-size:0.8rem; font-weight:300; color:var(--text-muted); margin-top:0.2rem; font-family:var(--mono); }
+  .territory-owned { display:inline-flex; align-items:center; gap:0.5rem; padding:0.45rem 1rem; background:rgba(20,168,143,0.1); border:1px solid rgba(20,168,143,0.25); border-radius:100px; font-family:var(--mono); font-size:0.7rem; letter-spacing:0.07em; color:var(--teal-light); }
+  .territory-owned::before { content:'✓'; font-size:0.75rem; }
+
+  /* Posts feed */
+  .territory-posts { padding:0 2rem; }
+  .territory-post { display:flex; align-items:baseline; gap:1rem; padding:1rem 0; border-bottom:1px solid rgba(255,255,255,0.05); text-decoration:none; color:inherit; transition:background 0.15s; cursor:pointer; }
+  .territory-post:last-child { border-bottom:none; }
+  .territory-post:hover .post-title { color:var(--teal-light); }
+  .post-sats { font-family:var(--mono); font-size:0.72rem; color:#ff8800; min-width:56px; text-align:right; flex-shrink:0; }
+  .post-body { flex:1; min-width:0; }
+  .post-title { font-size:0.9rem; font-weight:500; line-height:1.35; transition:color 0.15s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .post-byline { margin-top:0.2rem; font-family:var(--mono); font-size:0.68rem; color:var(--text-muted); }
+  .post-byline .poster { color:rgba(245,242,236,0.45); }
+
+  /* Territory footer */
+  .territory-footer { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; padding:1.2rem 2rem; border-top:1px solid rgba(255,136,0,0.12); background:rgba(255,136,0,0.03); }
+  .territory-footer-stats { display:flex; gap:1rem; }
+  .t-stat { font-family:var(--mono); font-size:0.72rem; color:var(--text-muted); }
+  .t-stat span { color:var(--off-white); }
+  .territory-footer a.sn-visit { display:inline-flex; align-items:center; gap:0.4rem; font-family:var(--mono); font-size:0.75rem; color:#ff8800; text-decoration:none; letter-spacing:0.04em; transition:opacity 0.2s; }
+  .territory-footer a.sn-visit:hover { opacity:0.7; }
+
+  /* Learner fund callout */
+  .learner-fund { margin-top:2rem; display:flex; align-items:flex-start; gap:1.2rem; padding:1.4rem 1.6rem; background:rgba(20,168,143,0.06); border:1px solid rgba(20,168,143,0.18); border-radius:14px; }
+  .lf-icon { font-size:1.6rem; flex-shrink:0; line-height:1; }
+  .lf-body h4 { font-family:var(--mono); font-size:0.8rem; letter-spacing:0.07em; text-transform:uppercase; color:var(--teal-light); margin-bottom:0.4rem; }
+  .lf-body p { font-size:0.86rem; font-weight:300; color:rgba(245,242,236,0.68); line-height:1.65; }
+  .lf-body a { color:var(--teal-light); text-decoration:none; }
+  .lf-body a:hover { text-decoration:underline; }
+
+  /* Other territories */
+  .other-territories { margin-top:2.5rem; }
+  .other-territories h3 { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted); margin-bottom:1rem; }
+  .sn-territories { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
+  .sn-territory { padding:1.3rem 1.5rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,136,0,0.1); border-radius:12px; text-decoration:none; color:inherit; display:block; transition:all 0.22s; position:relative; overflow:hidden; }
+  .sn-territory::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,#ff8800,transparent); opacity:0; transition:opacity 0.22s; }
+  .sn-territory:hover { background:rgba(255,136,0,0.07); border-color:rgba(255,136,0,0.25); transform:translateY(-3px); }
+  .sn-territory:hover::before { opacity:1; }
+  .sn-territory-icon { font-size:1.3rem; margin-bottom:0.6rem; }
+  .sn-territory h3 { font-family:var(--mono); font-size:0.85rem; font-weight:700; color:var(--off-white); margin-bottom:0.3rem; }
+  .sn-territory h3 span { color:#ff8800; }
+  .sn-territory p { font-size:0.82rem; font-weight:300; color:rgba(245,242,236,0.55); line-height:1.5; }
+  .sn-territory .sn-link { margin-top:0.75rem; font-family:var(--mono); font-size:0.68rem; color:#ff8800; display:flex; align-items:center; gap:0.3rem; }
+  .sn-territory .sn-link::after { content:"↗"; }
+  .sn-cta { margin-top:2rem; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+  .btn-sn { background:rgba(255,136,0,0.12); color:#ff8800; border:1px solid rgba(255,136,0,0.3); }
+  .btn-sn:hover { background:rgba(255,136,0,0.2); border-color:#ff8800; transform:translateY(-2px); }
+  /* JOBS */
+  #jobs { padding-top:5.5rem; padding-bottom:5.5rem; }
+  .jobs-intro { margin-top:1.2rem; font-weight:300; line-height:1.7; color:rgba(245,242,236,0.7); max-width:620px; }
+  .jobs-sources { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:2.5rem; }
+  .jobs-source-card { padding:2rem; border-radius:16px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); display:flex; flex-direction:column; gap:1rem; }
+  .jobs-source-card.bj { border-color:rgba(247,147,26,0.2); background:rgba(247,147,26,0.04); }
+  .jobs-source-card.sn { border-color:rgba(255,136,0,0.2); background:rgba(255,136,0,0.04); }
+  .jobs-source-logo { display:flex; align-items:center; gap:0.75rem; }
+  .jobs-source-logo .logo-icon { width:38px; height:38px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+  .jobs-source-logo .logo-icon.bj { background:rgba(247,147,26,0.15); }
+  .jobs-source-logo .logo-icon.sn { background:rgba(255,136,0,0.15); }
+  .jobs-source-logo .logo-name { font-family:var(--mono); font-size:0.88rem; font-weight:700; }
+  .jobs-source-logo .logo-name span { display:block; font-size:0.68rem; font-weight:400; color:var(--text-muted); margin-top:0.1rem; }
+  .jobs-source-card p { font-size:0.86rem; font-weight:300; color:rgba(245,242,236,0.62); line-height:1.6; flex:1; }
+  .jobs-source-card .source-stats { display:flex; gap:0.6rem; flex-wrap:wrap; }
+  .jobs-stat { font-family:var(--mono); font-size:0.7rem; color:var(--text-muted); background:rgba(255,255,255,0.05); padding:0.3rem 0.65rem; border-radius:100px; }
+  .jobs-stat span { color:var(--off-white); }
+  .jobs-source-card .source-link { font-family:var(--mono); font-size:0.75rem; letter-spacing:0.05em; display:flex; align-items:center; gap:0.35rem; text-decoration:none; margin-top:auto; transition:opacity 0.2s; }
+  .jobs-source-card.bj .source-link { color:#f7931a; }
+  .jobs-source-card.sn .source-link { color:#ff8800; }
+  .jobs-source-card .source-link::after { content:"\2197"; }
+  .jobs-source-card .source-link:hover { opacity:0.7; }
+  .jobs-categories { margin-top:3rem; }
+  .jobs-categories h3 { font-family:var(--mono); font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:1.2rem; }
+  .cat-grid { display:flex; flex-wrap:wrap; gap:0.6rem; }
+  .cat-tag { display:inline-flex; align-items:center; gap:0.45rem; padding:0.45rem 0.9rem; background:rgba(20,168,143,0.07); border:1px solid rgba(20,168,143,0.14); border-radius:100px; font-family:var(--mono); font-size:0.72rem; color:var(--text-muted); text-decoration:none; transition:all 0.2s; }
+  .cat-tag:hover { background:rgba(20,168,143,0.14); border-color:var(--teal-light); color:var(--off-white); }
+  .cat-tag .cat-dot { width:5px; height:5px; border-radius:50%; background:var(--teal-light); flex-shrink:0; }
+  .jobs-cta-row { display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.5rem; align-items:center; }
+  .btn-bj { background:rgba(247,147,26,0.12); color:#f7931a; border:1px solid rgba(247,147,26,0.3); }
+  .btn-bj:hover { background:rgba(247,147,26,0.22); border-color:#f7931a; transform:translateY(-2px); }
+  .jobs-notice { margin-top:1.8rem; padding:1rem 1.2rem; background:rgba(20,168,143,0.05); border-left:3px solid var(--teal-light); border-radius:0 8px 8px 0; font-size:0.83rem; font-weight:300; color:rgba(245,242,236,0.6); line-height:1.65; }
+  .jobs-notice strong { color:var(--teal-light); font-weight:500; }
+  @media (max-width:600px) { .jobs-sources { grid-template-columns:1fr; } }
+
+  /* DONATE */
+  .donate-band { background:linear-gradient(135deg,rgba(20,168,143,0.11) 0%,rgba(240,201,58,0.05) 100%); border:1px solid rgba(20,168,143,0.18); border-radius:20px; padding:3.5rem; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; margin:4rem 2.5rem; }
+  .donate-band h2 { font-size:clamp(1.6rem,3vw,2.2rem); }
+  .donate-band p { margin-top:0.6rem; font-weight:300; color:rgba(245,242,236,0.63); max-width:460px; }
+
+  /* CONNECT */
+  #connect { text-align:center; }
+  .connect-email { display:inline-flex; align-items:center; gap:0.6rem; margin-top:2rem; font-family:var(--mono); font-size:1rem; color:var(--teal-light); text-decoration:none; border-bottom:1px solid rgba(20,168,143,0.3); padding-bottom:0.2rem; transition:all 0.2s; }
+  .connect-email:hover { color:var(--accent); border-color:var(--accent); }
+  .social-row { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:2.5rem; }
+  .social-btn { display:flex; align-items:center; gap:0.5rem; padding:0.65rem 1.2rem; background:rgba(255,255,255,0.04); border:1px solid rgba(245,242,236,0.11); border-radius:8px; font-family:var(--mono); font-size:0.76rem; letter-spacing:0.06em; color:var(--text-muted); text-decoration:none; transition:all 0.2s; }
+  .social-btn:hover { background:rgba(20,168,143,0.1); border-color:var(--teal-light); color:var(--off-white); transform:translateY(-2px); }
+
+  /* FOOTER */
+  footer { border-top:1px solid rgba(20,168,143,0.1); padding:2rem 2.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-family:var(--mono); font-size:0.7rem; color:var(--text-muted); }
+  footer a { color:var(--text-muted); text-decoration:none; }
+  footer a:hover { color:var(--teal-light); }
+  .footer-logo { display:flex; align-items:center; gap:0.6rem; }
+
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease,transform 0.65s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  @media (max-width:768px) {
+    .about-grid { grid-template-columns:1fr; gap:2rem; }
+    .donate-band { padding:2rem; }
+    h1 { font-size:2.4rem; }
+  }
+
+  /* WHITEPAPER */
+  #whitepaper { padding-top:5.5rem; padding-bottom:5.5rem; }
+  .wp-intro { margin-top:1rem; font-weight:300; line-height:1.72; color:rgba(245,242,236,0.7); max-width:660px; }
+  .wp-byline { display:inline-flex; align-items:center; gap:0.5rem; margin-top:0.8rem; font-family:var(--mono); font-size:0.72rem; color:var(--text-muted); }
+  .wp-byline span { color:var(--teal-light); }
+  .wp-grid { display:grid; grid-template-columns:280px 1fr; gap:2.5rem; margin-top:3rem; align-items:start; }
+  .wp-toc { position:sticky; top:80px; background:rgba(255,255,255,0.02); border:1px solid rgba(20,168,143,0.12); border-radius:14px; padding:1.4rem; }
+  .wp-toc h4 { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--teal-light); margin-bottom:1rem; }
+  .wp-toc ol { list-style:none; counter-reset:toc; display:flex; flex-direction:column; gap:0.5rem; }
+  .wp-toc ol li { counter-increment:toc; display:flex; align-items:baseline; gap:0.5rem; font-size:0.8rem; }
+  .wp-toc ol li::before { content:counter(toc)"."; font-family:var(--mono); font-size:0.68rem; color:var(--teal-light); flex-shrink:0; }
+  .wp-toc ol a { color:rgba(245,242,236,0.6); text-decoration:none; transition:color 0.2s; line-height:1.4; }
+  .wp-toc ol a:hover { color:var(--teal-light); }
+  .wp-toc .wp-license { margin-top:1.2rem; padding-top:1rem; border-top:1px solid rgba(20,168,143,0.1); font-family:var(--mono); font-size:0.66rem; color:var(--text-muted); }
+  .wp-toc .wp-license a { color:var(--text-muted); text-decoration:none; }
+  .wp-toc .wp-license a:hover { color:var(--teal-light); }
+  .wp-body { min-width:0; }
+  .wp-section { margin-bottom:3rem; }
+  .wp-section h3 { font-family:var(--mono); font-size:1rem; font-weight:700; letter-spacing:0.02em; color:var(--off-white); margin-bottom:0.9rem; padding-bottom:0.6rem; border-bottom:1px solid rgba(20,168,143,0.12); }
+  .wp-section h3 .sec-num { color:var(--teal-light); margin-right:0.5rem; }
+  .wp-section p { font-size:0.9rem; font-weight:300; line-height:1.75; color:rgba(245,242,236,0.72); margin-bottom:0.9rem; }
+  .wp-section p strong { color:var(--off-white); font-weight:500; }
+  .wp-section ul { list-style:none; display:flex; flex-direction:column; gap:0.55rem; margin:0.9rem 0; }
+  .wp-section ul li { font-size:0.88rem; font-weight:300; color:rgba(245,242,236,0.68); line-height:1.6; padding-left:1.2rem; position:relative; }
+  .wp-section ul li::before { content:'›'; position:absolute; left:0; color:var(--teal-light); }
+  .wp-section ul li strong { color:var(--off-white); font-weight:500; }
+  .wp-abstract { padding:1.4rem 1.8rem; background:rgba(20,168,143,0.06); border-left:3px solid var(--teal-light); border-radius:0 12px 12px 0; margin-bottom:2.5rem; }
+  .wp-abstract p { font-size:0.88rem; font-style:italic; color:rgba(245,242,236,0.68); line-height:1.72; margin:0; }
+
+  /* Diagrams */
+  .wp-diagram { margin:1.8rem 0; background:rgba(13,26,23,0.6); border:1px solid rgba(20,168,143,0.15); border-radius:16px; padding:1.5rem; overflow:hidden; }
+  .wp-diagram figcaption { font-family:var(--mono); font-size:0.7rem; color:var(--text-muted); text-align:center; margin-top:1rem; letter-spacing:0.05em; }
+  .wp-diagram svg { display:block; margin:0 auto; max-width:100%; }
+
+  @media (max-width:860px) {
+    .wp-grid { grid-template-columns:1fr; }
+    .wp-toc { position:static; }
+  }
+
+  /* WHITEPAPER */
+  #whitepaper { }
+  .wp-byline { display:inline-flex; align-items:center; gap:0.4rem; margin-top:0.7rem; font-family:var(--mono); font-size:0.72rem; color:var(--text-muted); flex-wrap:wrap; }
+  .wp-layout { display:grid; grid-template-columns:230px 1fr; gap:3rem; margin-top:3rem; align-items:start; }
+  .wp-toc { position:sticky; top:80px; background:rgba(255,255,255,0.02); border:1px solid rgba(20,168,143,0.12); border-radius:14px; padding:1.4rem; }
+  .wp-toc h4 { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--teal-light); margin-bottom:1rem; }
+  .wp-toc-list { list-style:none; display:flex; flex-direction:column; gap:0.25rem; }
+  .wp-toc-list li a { font-size:0.78rem; color:rgba(245,242,236,0.5); text-decoration:none; transition:color 0.2s; display:block; padding:0.1rem 0; line-height:1.4; }
+  .wp-toc-list li a:hover { color:var(--teal-light); }
+  .wp-toc-list li.toc-num { font-family:var(--mono); font-size:0.64rem; color:var(--teal-light); margin-top:0.5rem; }
+  .toc-gpl { margin-top:1.2rem; padding-top:1rem; border-top:1px solid rgba(20,168,143,0.1); font-family:var(--mono); font-size:0.64rem; color:var(--text-muted); line-height:1.6; }
+  .toc-gpl a { color:var(--text-muted); text-decoration:none; }
+  .toc-gpl a:hover { color:var(--teal-light); }
+  .wp-body { min-width:0; }
+  .wp-abstract { padding:1.3rem 1.7rem; background:rgba(20,168,143,0.06); border-left:3px solid var(--teal-light); border-radius:0 12px 12px 0; margin-bottom:2.5rem; font-size:0.875rem; font-style:italic; color:rgba(245,242,236,0.68); line-height:1.78; }
+  .wp-section { margin-bottom:2.5rem; }
+  .wp-section h3 { font-family:var(--mono); font-size:0.95rem; font-weight:700; color:var(--off-white); margin-bottom:0.85rem; padding-bottom:0.55rem; border-bottom:1px solid rgba(20,168,143,0.12); display:flex; align-items:baseline; gap:0.55rem; }
+  .wp-section h3 .sn { color:var(--teal-light); font-size:0.75rem; font-weight:400; }
+  .wp-section h4 { font-family:var(--mono); font-size:0.8rem; font-weight:700; color:rgba(245,242,236,0.82); margin:1.2rem 0 0.45rem; }
+  .wp-section p { font-size:0.875rem; font-weight:300; line-height:1.8; color:rgba(245,242,236,0.7); margin-bottom:0.8rem; }
+  .wp-section p strong { color:var(--off-white); font-weight:500; }
+  .wp-section ul { list-style:none; display:flex; flex-direction:column; gap:0.45rem; margin:0.8rem 0; }
+  .wp-section ul li { font-size:0.86rem; font-weight:300; color:rgba(245,242,236,0.67); line-height:1.65; padding-left:1.2rem; position:relative; }
+  .wp-section ul li::before { content:'›'; position:absolute; left:0; color:var(--teal-light); }
+  .wp-section ul li strong { color:var(--off-white); font-weight:500; }
+  .wp-diagram { margin:1.8rem 0; background:rgba(10,20,18,0.75); border:1px solid rgba(20,168,143,0.14); border-radius:16px; padding:1.8rem 1.5rem 1.2rem; }
+  .wp-diagram svg { display:block; margin:0 auto; max-width:100%; height:auto; }
+  .wp-diagram figcaption { font-family:var(--mono); font-size:0.66rem; color:var(--text-muted); text-align:center; margin-top:1rem; letter-spacing:0.06em; text-transform:uppercase; }
+  @media(max-width:800px){ .wp-layout{grid-template-columns:1fr;} .wp-toc{position:static;} }
+
+
+  /* Social buttons — white except Nostr */
+  .social-btn-x, .social-btn-fb, .social-btn-li, .social-btn-gh { color:var(--text-muted); border-color:rgba(245,242,236,0.11); }
+  .social-btn-x:hover, .social-btn-fb:hover, .social-btn-li:hover, .social-btn-gh:hover { background:rgba(20,168,143,0.1) !important; border-color:var(--teal-light) !important; color:var(--off-white) !important; }
+  .social-btn-nostr { color:#c4b5fd; border-color:rgba(139,92,246,0.3); }
+  .social-btn-nostr:hover { background:rgba(139,92,246,0.12) !important; border-color:#8b5cf6 !important; color:#ddd6fe !important; }
+  body.light .social-btn-x, body.light .social-btn-fb, body.light .social-btn-li, body.light .social-btn-gh { color:#3a6358; border-color:rgba(0,0,0,0.12); }
+  body.light .social-btn-x:hover, body.light .social-btn-fb:hover, body.light .social-btn-li:hover, body.light .social-btn-gh:hover { background:rgba(10,122,104,0.1) !important; border-color:#0a7a68 !important; color:#111a16 !important; }
+  body.light .social-btn-nostr { color:#7c3aed; border-color:rgba(124,58,237,0.3); }
+
+  /* LIGHT MODE */
+  body.light {
+    --dark: #f2f0ea;
+    --mid: #e0dbd0;
+    --off-white: #111a16;
+    --text-muted: #3a6358;
+    --teal-light: #0a7a68;
+    --accent: #b8890a;
+  }
+
+  /* Light mode — invert ALL text to dark, all backgrounds to light */
+  body.light { background: #f2f0ea; color: #111a16; }
+  body.light * { color: inherit; }
+
+  /* Nav */
+  body.light nav { background: rgba(242,240,234,0.94); border-bottom-color: rgba(10,122,104,0.2); }
+  body.light .nav-wordmark { color: #111a16; }
+  body.light .nav-wordmark span { color: #b8890a; }
+  body.light nav ul a { color: #3a6358; }
+  body.light nav ul a:hover { color: #b8890a; }
+
+  /* Hero */
+  body.light .grid-overlay { background-image: linear-gradient(rgba(10,122,104,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(10,122,104,0.07) 1px, transparent 1px); }
+  body.light .hero-bg { background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(10,122,104,0.1) 0%, transparent 70%); }
+  body.light h1 { color: #111a16; }
+  body.light h1 .accent { color: #0a7a68; }
+  body.light .hero-sub { color: rgba(17,26,22,0.72); }
+  body.light .pillars span { color: #111a16; }
+  body.light .section-label { color: #0a7a68; }
+  body.light h2 { color: #111a16; }
+  body.light h2 .accent { color: #0a7a68; }
+
+  /* Shapes */
+  body.light .shape { opacity: 0.08; }
+
+  /* Separators */
+  body.light .sep-line { border-color: rgba(10,122,104,0.15); }
+
+  /* About */
+  body.light .about-text p { color: rgba(17,26,22,0.75); }
+  body.light .about-text a { color: #0a7a68; }
+  body.light .impact-card { background: rgba(10,122,104,0.06); border-color: rgba(10,122,104,0.18); }
+  body.light .impact-card h3 { color: #111a16; }
+  body.light .impact-card p { color: #3a6358; }
+  body.light .charity-badge { background: rgba(184,137,10,0.08); border-color: rgba(184,137,10,0.25); color: #b8890a; }
+
+  /* Team */
+  body.light .team-card { background: rgba(255,255,255,0.8); border-color: rgba(10,122,104,0.2); }
+  body.light .team-card:hover { background: #fff; border-color: #0a7a68; }
+  body.light .team-name { color: #111a16; }
+  body.light .team-role { color: #0a7a68; }
+  body.light .team-link-hint { color: #3a6358; }
+
+  /* Projects */
+  body.light .project-card { background: rgba(255,255,255,0.75); color: #111a16; }
+  body.light .project-card:hover { background: #fff; }
+  body.light .pc-teal { border-color: rgba(10,122,104,0.25); }
+  body.light .pc-gold { border-color: rgba(184,137,10,0.28); }
+  body.light .pc-orange { border-color: rgba(200,100,0,0.25); }
+  body.light .pc-coral { border-color: rgba(180,60,30,0.25); }
+  body.light .pc-purple { border-color: rgba(109,62,216,0.25); }
+  body.light .project-num { color: #0a7a68; }
+  body.light .project-card h3 { color: #111a16; }
+  body.light .project-card p { color: rgba(17,26,22,0.68); }
+  body.light .project-tag { background: rgba(10,122,104,0.1); color: #0a7a68; }
+
+  /* Stacker News */
+  body.light .sn-description { color: rgba(17,26,22,0.72); }
+  body.light .territory-hero { background: rgba(255,136,0,0.04); border-color: rgba(255,136,0,0.22); }
+  body.light .territory-header { background: rgba(255,136,0,0.06); border-color: rgba(255,136,0,0.15); }
+  body.light .territory-name { color: #111a16; }
+  body.light .territory-meta { color: #3a6358; }
+  body.light .territory-post { border-color: rgba(0,0,0,0.07); }
+  body.light .post-title { color: #111a16; }
+  body.light .post-byline { color: #3a6358; }
+  body.light .territory-footer { background: rgba(255,136,0,0.04); border-color: rgba(255,136,0,0.15); }
+  body.light .t-stat { color: #3a6358; }
+  body.light .t-stat span { color: #111a16; }
+  body.light .learner-fund { background: rgba(10,122,104,0.07); border-color: rgba(10,122,104,0.22); }
+  body.light .lf-body h4 { color: #0a7a68; }
+  body.light .lf-body p { color: rgba(17,26,22,0.7); }
+  body.light .sn-territory { background: rgba(255,255,255,0.6); border-color: rgba(255,136,0,0.15); }
+  body.light .sn-territory:hover { background: rgba(255,255,255,0.9); }
+  body.light .sn-territory h3 { color: #111a16; }
+  body.light .sn-territory p { color: rgba(17,26,22,0.65); }
+
+  /* Jobs */
+  body.light .jobs-intro { color: rgba(17,26,22,0.72); }
+  body.light .jobs-source-card { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.1); }
+  body.light .jobs-source-card.bj { background: rgba(247,147,26,0.05); border-color: rgba(247,147,26,0.25); }
+  body.light .jobs-source-card.sn { background: rgba(255,136,0,0.05); border-color: rgba(255,136,0,0.25); }
+  body.light .logo-name { color: #111a16; }
+  body.light .logo-name span { color: #3a6358; }
+  body.light .jobs-source-card p { color: rgba(17,26,22,0.68); }
+  body.light .jobs-stat { color: #3a6358; background: rgba(0,0,0,0.05); }
+  body.light .cat-tag { background: rgba(10,122,104,0.08); border-color: rgba(10,122,104,0.2); color: #3a6358; }
+  body.light .cat-tag:hover { color: #111a16; background: rgba(10,122,104,0.15); }
+  body.light .jobs-notice { background: rgba(10,122,104,0.06); border-left-color: #0a7a68; color: rgba(17,26,22,0.68); }
+  body.light .jobs-notice strong { color: #0a7a68; }
+
+  /* Donate */
+  body.light .donate-band { background: linear-gradient(135deg,rgba(10,122,104,0.1) 0%,rgba(184,137,10,0.06) 100%); border-color: rgba(10,122,104,0.25); }
+  body.light .donate-band h2 { color: #111a16; }
+  body.light .donate-band p { color: rgba(17,26,22,0.68); }
+
+  /* Connect */
+  body.light .connect-email { color: #0a7a68; }
+  body.light .social-btn { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.12); color: #3a6358; }
+  body.light .social-btn:hover { background: rgba(10,122,104,0.1); border-color: #0a7a68; color: #111a16; }
+
+  /* Footer */
+  body.light footer { border-color: rgba(10,122,104,0.15); color: #3a6358; }
+  body.light footer a { color: #3a6358; }
+  body.light footer a:hover { color: #0a7a68; }
+
+  /* Light mode bg cogs — darker colours so they show on pale background */
+  body.light .bg-cog { opacity:0.55; }
+  body.light .bg-cog-2 { opacity:0.5; }
+  body.light .bg-cog-3 { opacity:0.45; }
+  body.light .bg-cog-4 { opacity:0.5; }
+
+
+  /* Whitepaper */
+  body.light .wp-byline { color: #3a6358; }
+  body.light .wp-toc { background: rgba(255,255,255,0.7); border-color: rgba(10,122,104,0.18); }
+  body.light .wp-toc h4 { color: #0a7a68; }
+  body.light .wp-toc-list li a { color: rgba(17,26,22,0.6); }
+  body.light .wp-toc-list li a:hover { color: #0a7a68; }
+  body.light .toc-num { color: #0a7a68; }
+  body.light .toc-gpl { color: #3a6358; border-color: rgba(10,122,104,0.1); }
+  body.light .wp-abstract { background: rgba(10,122,104,0.07); border-left-color: #0a7a68; color: rgba(17,26,22,0.75); }
+  body.light .wp-section h3 { color: #111a16; border-color: rgba(10,122,104,0.15); }
+  body.light .wp-section h4 { color: rgba(17,26,22,0.85); }
+  body.light .wp-section p { color: rgba(17,26,22,0.72); }
+  body.light .wp-section ul li { color: rgba(17,26,22,0.7); }
+  body.light .wp-section ul li strong { color: #111a16; }
+  body.light .wp-diagram { background: rgba(255,255,255,0.8); border-color: rgba(10,122,104,0.18); }
+
+  /* Buttons */
+  body.light .btn-primary { background: #0a7a68; color: #fff; }
+  body.light .btn-primary:hover { background: #b8890a; }
+  body.light .btn-outline { border-color: rgba(17,26,22,0.25); color: #111a16; }
+  body.light .btn-outline:hover { border-color: #0a7a68; color: #0a7a68; }
+
+  /* Theme toggle */
+  /* Toggle switch */
+  .theme-toggle {
+    position: relative;
+    width: 44px; height: 24px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(20,168,143,0.3);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.25s, border-color 0.25s;
+    flex-shrink: 0;
+    padding: 0;
+  }
+  .theme-toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--teal-light);
+    transition: transform 0.25s, background 0.25s;
+  }
+  .theme-toggle:hover { border-color: var(--teal-light); background: rgba(20,168,143,0.15); }
+  body.light .theme-toggle { background: #0a7a68; border-color: #0a7a68; }
+  body.light .theme-toggle::after { transform: translateX(20px); background: #fff; }
+  body.light .theme-toggle .toggle-icon { transform: rotate(180deg); }
+
+
+  /* DIGITAL PORTFOLIO SECTION */
+  #digital-portfolio { }
+  .dp-hero { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; margin-top:3rem; }
+  .dp-visual { position:relative; }
+  .dp-screen { background:rgba(13,26,23,0.8); border:1px solid rgba(20,168,143,0.25); border-radius:16px; padding:1.5rem; }
+  .dp-screen-bar { display:flex; align-items:center; gap:0.5rem; margin-bottom:1.2rem; }
+  .dp-dot { width:10px; height:10px; border-radius:50%; }
+  .dp-dot-1 { background:#e05a3a; }
+  .dp-dot-2 { background:#f0c93a; }
+  .dp-dot-3 { background:#14a88f; }
+  .dp-screen-url { font-family:var(--mono); font-size:0.68rem; color:var(--text-muted); background:rgba(255,255,255,0.04); padding:0.25rem 0.7rem; border-radius:4px; flex:1; text-align:center; }
+  .dp-mock-item { background:rgba(255,255,255,0.03); border:1px solid rgba(20,168,143,0.12); border-radius:10px; padding:1rem; margin-bottom:0.7rem; }
+  .dp-mock-item:last-child { margin-bottom:0; }
+  .dp-mock-title { font-family:var(--mono); font-size:0.78rem; font-weight:700; color:var(--off-white); margin-bottom:0.3rem; }
+  .dp-mock-tag { display:inline-block; font-family:var(--mono); font-size:0.62rem; background:rgba(20,168,143,0.12); color:var(--teal-light); border:1px solid rgba(20,168,143,0.2); border-radius:100px; padding:0.15rem 0.5rem; margin-bottom:0.4rem; text-transform:uppercase; }
+  .dp-mock-text { font-size:0.78rem; color:var(--text-muted); font-weight:300; }
+  .dp-features { display:flex; flex-direction:column; gap:0.8rem; margin-top:1.5rem; }
+  .dp-feature { display:flex; align-items:flex-start; gap:0.9rem; }
+  .dp-feature-icon { width:34px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; background:rgba(20,168,143,0.08); border:1px solid rgba(20,168,143,0.15); }
+  .dp-feature-text h4 { font-family:var(--mono); font-size:0.78rem; font-weight:700; color:var(--off-white); margin-bottom:0.2rem; }
+  .dp-feature-text p { font-size:0.82rem; font-weight:300; color:var(--text-muted); line-height:1.55; }
+  .dp-nostr-badge { display:inline-flex; align-items:center; gap:0.5rem; padding:0.4rem 0.9rem; background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.25); border-radius:100px; font-family:var(--mono); font-size:0.7rem; color:#c4b5fd; margin-bottom:1.2rem; }
+  @media(max-width:768px) { .dp-hero { grid-template-columns:1fr; } }
+
+
+  .project-card-wide { grid-column: 1 / -1; }
+  .project-card-wide-inner { display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap; }
+  .project-card-wide-text { flex:1; min-width:0; }
+  .project-card-wide-text h3 { margin-bottom:0.5rem; }
+  .project-card-wide-cta { display:flex; flex-direction:column; align-items:flex-end; gap:1rem; flex-shrink:0; }
+  .project-wide-arrow { font-family:var(--mono); font-size:0.78rem; color:var(--teal-light); letter-spacing:0.04em; white-space:nowrap; }
+  .pc-teal:hover .project-wide-arrow { color:var(--accent); }
+  @media(max-width:580px){ .project-card-wide-inner{ flex-direction:column; } .project-card-wide-cta{ align-items:flex-start; } }
+
+
+  /* HAMBURGER NAV */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px; height: 36px;
+    background: none;
+    border: 1px solid rgba(20,168,143,0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px 7px;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+  }
+  .hamburger:hover { border-color: var(--teal-light); }
+  .hamburger span {
+    display: block;
+    width: 100%; height: 1.5px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    transition: all 0.25s;
+    transform-origin: center;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); background: var(--teal-light); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); background: var(--teal-light); }
+
+  /* Mobile drawer */
+  .nav-drawer {
+    display: none;
+    position: fixed;
+    top: 58px; left: 0; right: 0;
+    background: rgba(13,26,23,0.98);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(20,168,143,0.2);
+    z-index: 99;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+  .nav-drawer.open {
+    max-height: 500px;
+    padding: 1rem 0;
+  }
+  .nav-drawer ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .nav-drawer ul a {
+    display: block;
+    padding: 0.75rem 2rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+    border-left: 2px solid transparent;
+  }
+  .nav-drawer ul a:hover {
+    color: var(--teal-light);
+    background: rgba(20,168,143,0.06);
+    border-left-color: var(--teal-light);
+  }
+
+  /* Light mode hamburger */
+  body.light .hamburger { border-color: rgba(10,122,104,0.25); }
+  body.light .hamburger span { background: #3a6358; }
+  body.light .nav-drawer { background: rgba(242,240,234,0.98); border-color: rgba(10,122,104,0.2); }
+  body.light .nav-drawer ul a { color: #3a6358; }
+  body.light .nav-drawer ul a:hover { color: #0a7a68; background: rgba(10,122,104,0.06); border-left-color: #0a7a68; }
+
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .hamburger { display: flex; }
+    .nav-drawer { display: block; }
+  }
+
+
+  /* BACK TO TOP */
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(13,26,23,0.85);
+    border: 1px solid rgba(20,168,143,0.35);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.3s, transform 0.3s, border-color 0.2s, background 0.2s;
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+  }
+  .back-to-top.visible { opacity: 1; transform: translateY(0); }
+  .back-to-top:hover { border-color: var(--teal-light); background: rgba(20,168,143,0.15); }
+  .back-to-top svg { animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-4px); }
+  }
+  .back-to-top:hover svg { animation-play-state: paused; }
+  body.light .back-to-top { background: rgba(242,240,234,0.92); border-color: rgba(10,122,104,0.3); }
+  body.light .back-to-top:hover { background: rgba(10,122,104,0.1); border-color: #0a7a68; }
+  body.light .back-to-top svg path { stroke: #0a7a68; }
+
+
+
+  /* DONATE QR */
+  .donate-qr-card {
+    display: flex; align-items: flex-start; gap: 1.8rem;
+    padding: 1.6rem 2rem;
+    background: rgba(20,168,143,0.06);
+    border: 1px solid rgba(20,168,143,0.18);
+    border-radius: 14px;
+    flex-wrap: nowrap;
+  }
+  @media(max-width:520px){ .donate-qr-card { flex-wrap: wrap; justify-content: center; } }
+  .donate-qr-wrap {
+    position: relative; flex-shrink: 0; cursor: zoom-in;
+    width: 160px; height: 160px;
+  }
+  .donate-qr-img {
+    width: 160px; height: 160px;
+    border-radius: 12px;
+    background: rgba(13,26,23,0.6);
+    padding: 10px;
+    display: block;
+    border: 1px solid rgba(20,168,143,0.25);
+    transition: transform 0.2s, box-shadow 0.2s;
+    object-fit: contain;
+  }
+  .donate-qr-wrap:hover .donate-qr-img {
+    transform: scale(1.04);
+    box-shadow: 0 8px 32px rgba(20,168,143,0.25);
+    border-color: var(--teal-light);
+  }
+  .qr-zoom-hint {
+    position: absolute; bottom: 6px; right: 6px;
+    font-family: var(--mono); font-size: 0.6rem;
+    color: var(--teal-light); opacity: 0;
+    transition: opacity 0.2s; letter-spacing: 0.04em;
+    background: rgba(13,26,23,0.7); padding: 2px 5px; border-radius: 4px;
+  }
+  .donate-qr-wrap:hover .qr-zoom-hint { opacity: 1; }
+  .donate-qr-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+  .donate-qr-label {
+    font-family: var(--mono); font-size: 0.68rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--teal-light); margin-bottom: 0.5rem;
+  }
+  .donate-qr-address {
+    font-family: var(--mono); font-size: 0.72rem;
+    color: var(--off-white); word-break: break-all;
+    line-height: 1.6; cursor: pointer;
+    transition: color 0.2s; text-decoration: none; display: block;
+    overflow-wrap: break-word;
+  }
+  .donate-qr-address:hover { color: var(--teal-light); }
+  .donate-copy-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 0.6rem; padding: 0.35rem 0.8rem;
+    background: rgba(20,168,143,0.1); border: 1px solid rgba(20,168,143,0.25);
+    border-radius: 6px; font-family: var(--mono); font-size: 0.68rem;
+    letter-spacing: 0.06em; color: var(--teal-light); cursor: pointer; transition: all 0.2s;
+  }
+  .donate-copy-btn:hover { background: rgba(20,168,143,0.18); border-color: var(--teal-light); }
+  .donate-copy-btn.copied { color: #22c55e; border-color: rgba(34,197,94,0.4); background: rgba(34,197,94,0.08); }
+  /* QR Modal */
+  .qr-modal {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+    cursor: zoom-out;
+  }
+  .qr-modal.open { display: flex; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  .qr-modal-inner {
+    background: var(--dark);
+    border: 1px solid rgba(20,168,143,0.3);
+    border-radius: 20px; padding: 2rem;
+    text-align: center; max-width: 320px; width: 90%;
+    animation: popIn 0.22s ease;
+    cursor: default;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  @keyframes popIn { from { transform:scale(0.88); opacity:0; } to { transform:scale(1); opacity:1; } }
+  .qr-modal-img {
+    width: 240px; height: 240px;
+    background: rgba(13,26,23,0.8); padding: 14px;
+    border-radius: 12px; border: 1px solid rgba(20,168,143,0.2);
+    display: block; margin: 0 auto;
+    object-fit: contain;
+  }
+  .qr-modal-label {
+    font-family: var(--mono); font-size: 0.7rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--teal-light); margin-top: 1.2rem;
+  }
+  .qr-modal-addr {
+    font-family: var(--mono); font-size: 0.75rem;
+    color: var(--off-white); word-break: break-all;
+    margin-top: 0.4rem; line-height: 1.5;
+  }
+  .qr-modal-close {
+    display: block; margin: 1rem auto 0;
+    font-family: var(--mono); font-size: 0.72rem;
+    color: var(--text-muted); cursor: pointer;
+    background: none; border: none; letter-spacing: 0.06em;
+  }
+  .qr-modal-close:hover { color: var(--teal-light); }
+  body.light .donate-qr-card { background: rgba(10,122,104,0.07); border-color: rgba(10,122,104,0.22); }
+  body.light .donate-qr-img { background: rgba(242,240,234,0.9); border-color: rgba(10,122,104,0.3); }
+  body.light .donate-qr-address { color: #111a16; }
+  body.light .donate-copy-btn { color: #0a7a68; }
+  body.light .qr-modal-inner { background: #f2f0ea; border-color: rgba(10,122,104,0.3); }
+  body.light .qr-modal-img { background: rgba(242,240,234,0.95); }
+  body.light .qr-modal-addr { color: #111a16; }
+
+
+  /* JOBS FEED */
+  .jobs-feed-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:2.5rem; }
+  @media(max-width:700px){ .jobs-feed-grid { grid-template-columns:1fr; } }
+  .jobs-panel { background:rgba(255,255,255,0.03); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; }
+  .jobs-panel-bj { border:1px solid rgba(247,147,26,0.2); }
+  .jobs-panel-sn { border:1px solid rgba(255,136,0,0.2); }
+  .jobs-panel-header { display:flex; align-items:center; justify-content:space-between; padding:1.2rem 1.4rem; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .jobs-panel-logo { display:flex; align-items:center; gap:0.75rem; }
+  .jobs-panel-viewall { font-family:var(--mono); font-size:0.68rem; letter-spacing:0.05em; color:var(--text-muted); text-decoration:none; transition:color 0.2s; white-space:nowrap; }
+  .jobs-panel-bj .jobs-panel-viewall:hover { color:#f7931a; }
+  .jobs-panel-sn .jobs-panel-viewall:hover { color:#ff8800; }
+  .jobs-feed { flex:1; padding:0.4rem 0; }
+  .jobs-feed-item { display:flex; align-items:baseline; gap:0.9rem; padding:0.85rem 1.4rem; border-bottom:1px solid rgba(255,255,255,0.04); text-decoration:none; color:inherit; transition:background 0.15s; }
+  .jobs-feed-item:last-child { border-bottom:none; }
+  .jobs-feed-item:hover { background:rgba(255,255,255,0.04); }
+  .jobs-feed-item:hover .job-title { color:var(--teal-light); }
+  .job-tag { font-family:var(--mono); font-size:0.65rem; padding:0.15rem 0.5rem; border-radius:100px; white-space:nowrap; flex-shrink:0; }
+  .jobs-panel-bj .job-tag { background:rgba(247,147,26,0.1); color:#f7931a; border:1px solid rgba(247,147,26,0.2); }
+  .jobs-panel-sn .job-tag { background:rgba(255,136,0,0.1); color:#ff8800; border:1px solid rgba(255,136,0,0.2); }
+  .job-title { font-size:0.85rem; font-weight:400; line-height:1.35; color:var(--off-white); transition:color 0.15s; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .jobs-panel-footer { padding:0.9rem 1.4rem; border-top:1px solid rgba(255,255,255,0.05); }
+  .jobs-post-link { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.05em; color:var(--text-muted); text-decoration:none; transition:color 0.2s; }
+  .jobs-panel-bj .jobs-post-link:hover { color:#f7931a; }
+  .jobs-panel-sn .jobs-post-link:hover { color:#ff8800; }
+  /* Loading skeletons */
+  .jobs-loading { pointer-events:none; }
+  .jobs-skeleton { height:12px; border-radius:4px; background:rgba(255,255,255,0.06); margin-bottom:6px; animation:shimmer 1.4s ease-in-out infinite; }
+  .jobs-skeleton.short { width:40%; height:9px; margin-bottom:0; }
+  @keyframes shimmer { 0%,100%{opacity:0.4} 50%{opacity:0.9} }
+  /* Light mode jobs */
+  body.light .jobs-panel { background:rgba(255,255,255,0.7); }
+  body.light .jobs-panel-bj { border-color:rgba(247,147,26,0.3); }
+  body.light .jobs-panel-sn { border-color:rgba(255,136,0,0.3); }
+  body.light .jobs-feed-item:hover { background:rgba(0,0,0,0.04); }
+  body.light .job-title { color:#111a16; }
+  body.light .jobs-skeleton { background:rgba(0,0,0,0.08); }
+
+</style>
+<style>
+  .wp-page-hero { padding: 7rem 2.5rem 3rem; max-width: 1100px; margin: 0 auto; border-bottom: 1px solid rgba(20,168,143,0.1); }
+  .wp-back { display:inline-flex; align-items:center; gap:0.4rem; font-family:var(--mono); font-size:0.72rem; letter-spacing:0.06em; color:var(--text-muted); text-decoration:none; margin-bottom:1.5rem; transition:color 0.2s; }
+  .wp-back:hover { color: var(--teal-light); }
+  .wp-hero-title { font-family:var(--mono); font-size:clamp(1.8rem,4vw,3rem); font-weight:700; line-height:1.1; letter-spacing:-0.02em; color:var(--off-white); margin-bottom:0.8rem; }
+  .wp-hero-title span { color: var(--teal-light); }
+  .wp-hero-byline { font-family:var(--mono); font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; margin-top:0.8rem; }
+  .wp-hero-byline a { color:var(--teal-light); text-decoration:none; }
+  .wp-hero-byline a:hover { text-decoration:underline; }
+  .wp-page-body { max-width:1100px; margin:0 auto; padding:3rem 2.5rem 5rem; }
+  body.light .wp-page-hero { border-color: rgba(10,122,104,0.15); }
+  @media(max-width:800px) { .wp-page-hero { padding:6rem 1.5rem 2rem; } .wp-page-body { padding:2rem 1.5rem 4rem; } .wp-layout { grid-template-columns:1fr !important; } .wp-toc { position:static !important; } }
+</style>
+</head>
+<body>
+<div class="page-bg" style="position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(20,168,143,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(20,168,143,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;"></div>
+<nav>
+  <a href="#home" class="nav-logo">
+    <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Cog 1 - left, larger -->
+      <g class="cog-large" transform="translate(10,19)">
+        <circle r="5.5" fill="none" stroke="#14a88f" stroke-width="2"/>
+        <circle r="2" fill="#14a88f"/>
+        <!-- Teeth -->
+        <rect x="-1.2" y="-8.5" width="2.4" height="3" rx="0.6" fill="#14a88f"/>
+        <rect x="-1.2" y="5.5" width="2.4" height="3" rx="0.6" fill="#14a88f"/>
+        <rect x="5.5" y="-1.2" width="3" height="2.4" rx="0.6" fill="#14a88f"/>
+        <rect x="-8.5" y="-1.2" width="3" height="2.4" rx="0.6" fill="#14a88f"/>
+        <rect x="3.8" y="-7.2" width="2.4" height="3" rx="0.6" fill="#14a88f" transform="rotate(45,4.7,-5.7)"/>
+        <rect x="-6.3" y="4.2" width="2.4" height="3" rx="0.6" fill="#14a88f" transform="rotate(45,-5.1,5.7)"/>
+        <rect x="3.8" y="4.2" width="2.4" height="3" rx="0.6" fill="#14a88f" transform="rotate(-45,5.1,5.7)"/>
+        <rect x="-6.3" y="-7.2" width="2.4" height="3" rx="0.6" fill="#14a88f" transform="rotate(-45,-4.7,-5.7)"/>
+      </g>
+      <!-- Cog 2 - right, smaller, accent -->
+      <g class="cog-small" transform="translate(25,14)">
+        <circle r="4" fill="none" stroke="#f0c93a" stroke-width="1.8"/>
+        <circle r="1.5" fill="#f0c93a"/>
+        <!-- Teeth -->
+        <rect x="-0.9" y="-6.5" width="1.8" height="2.5" rx="0.5" fill="#f0c93a"/>
+        <rect x="-0.9" y="4" width="1.8" height="2.5" rx="0.5" fill="#f0c93a"/>
+        <rect x="4" y="-0.9" width="2.5" height="1.8" rx="0.5" fill="#f0c93a"/>
+        <rect x="-6.5" y="-0.9" width="2.5" height="1.8" rx="0.5" fill="#f0c93a"/>
+        <rect x="2.5" y="-5.5" width="1.8" height="2.5" rx="0.5" fill="#f0c93a" transform="rotate(45,3.2,-4.3)"/>
+        <rect x="-4.3" y="3.1" width="1.8" height="2.5" rx="0.5" fill="#f0c93a" transform="rotate(45,-3.2,4.3)"/>
+        <rect x="2.5" y="3.1" width="1.8" height="2.5" rx="0.5" fill="#f0c93a" transform="rotate(-45,3.2,4.3)"/>
+        <rect x="-4.3" y="-5.5" width="1.8" height="2.5" rx="0.5" fill="#f0c93a" transform="rotate(-45,-3.2,-4.3)"/>
+      </g>
+      <!-- Cog 3 - bottom right, tiny, muted -->
+      <g class="cog-tiny" transform="translate(26,26)">
+        <circle r="2.8" fill="none" stroke="#7aa89a" stroke-width="1.4"/>
+        <circle r="1" fill="#7aa89a"/>
+        <rect x="-0.7" y="-4.5" width="1.4" height="1.8" rx="0.4" fill="#7aa89a"/>
+        <rect x="-0.7" y="2.7" width="1.4" height="1.8" rx="0.4" fill="#7aa89a"/>
+        <rect x="2.7" y="-0.7" width="1.8" height="1.4" rx="0.4" fill="#7aa89a"/>
+        <rect x="-4.5" y="-0.7" width="1.8" height="1.4" rx="0.4" fill="#7aa89a"/>
+      </g>
+      <!-- DP pixel text -->
+      <text x="3" y="9" font-family="monospace" font-weight="bold" font-size="7" fill="#f0c93a" opacity="0.9">dp</text>
+    </svg>
+    <div class="nav-wordmark">
+      Digital Playhouse<br>
+      <span>Foundation</span>
+    </div>
+  </a>
+  <ul>
+    <li><a href="index.html" style="color:var(--teal-light);">← Back to Digital Playhouse</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:0.75rem;">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode"></button>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer" id="navDrawer">
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#stacker">~Education</a></li>
+    <li><a href="#jobs">Jobs</a></li>
+    <li><a href="#whitepaper">Whitepaper</a></li>
+    <li><a href="#connect">Connect</a></li>
+    <li><a href="#donate">Donate ⚡</a></li>
+  </ul>
+</div>
+
+
+<div class="wp-page-hero">
+  <a href="index.html" class="wp-back">← Back to DPF</a>
+  <h1 class="wp-hero-title">A Decentralised Learning Protocol<br><span>for the Future of Education</span></h1>
+  <div class="wp-hero-byline">
+    <span>by Kieran Nolan</span><span>·</span>
+    <span>Digital Playhouse Foundation</span><span>·</span>
+    <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">GNU GPL v3.0</a>
+  </div>
+</div>
+
+<div class="wp-page-body">
+  <div class="wp-layout">
+    <div class="wp-toc">
+      <h4>// Contents</h4>
+      <ol class="wp-toc-list">
+        <li><a href="#wp-abstract">Abstract</a></li>
+        <li class="toc-num">1.</li><li><a href="#wp-problem">The Problem</a></li>
+        <li class="toc-num">2.</li><li><a href="#wp-solution">The Solution</a></li>
+        <li><a href="#wp-governance">&nbsp;↳ Governance</a></li>
+        <li><a href="#wp-financial">&nbsp;↳ Financial Ecosystem</a></li>
+        <li><a href="#wp-identity">&nbsp;↳ Digital Identity</a></li>
+        <li class="toc-num">3.</li><li><a href="#wp-programs">Core Programs</a></li>
+        <li class="toc-num">4.</li><li><a href="#wp-conclusion">Conclusion</a></li>
+      </ol>
+      <div class="toc-gpl"><a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">GNU General Public License v3.0</a><br>Open-source, freely distributed.</div>
+    </div>
+
+    <div class="wp-body">
+      <div class="wp-abstract" id="wp-abstract">
+        This paper presents an open-source, decentralised education protocol designed to revolutionise how learning communities function and engage with students, mentors, and the broader economy. By creating a system with no central authority, no standardised tests, and no singular point of failure, the protocol seeks to empower learners and mentors alike — with innovative governance, modular infrastructure, and a robust financial ecosystem built on the Lightning Network, Blockchain Technologies and Layer 2 Solutions.
+      </div>
+
+      <div class="wp-section" id="wp-problem">
+        <h3><span class="sn">01.</span> The Problem: Why Education Needs a Paradigm Shift</h3>
+        <h4>1.1 The Global Student Debt Crisis</h4>
+        <p>The global student loan market is projected to reach <strong>$3.8 trillion by 2029</strong>, trapping millions of students in long-term financial burdens. Tuition costs continue to rise, yet many graduates struggle to secure jobs that justify these expenses.</p>
+        <h4>1.2 Lack of Financial Literacy</h4>
+        <p>Traditional schooling does little to equip students with <strong>financial literacy skills</strong> necessary for modern life. Many young adults graduate without understanding how to manage money, make informed investment decisions, or navigate decentralised financial systems.</p>
+        <h4>1.3 Outdated Learning Models &amp; Job Market Disconnect</h4>
+        <p>The rapid advancement of <strong>automation, AI, and digital technologies</strong> is transforming the job market. Conventional education remains largely focused on outdated curricula, failing to equip students with the entrepreneurial and technological skills needed to thrive.</p>
+        <h4>1.4 Lack of Engagement &amp; Personalised Learning</h4>
+        <p>Many students experience <strong>low engagement and motivation</strong> due to rigid curricula, lack of autonomy, and ineffective teaching methods. Standardised testing stifles creativity and innovation.</p>
+      </div>
+
+      <div class="wp-section" id="wp-solution">
+        <h3><span class="sn">02.</span> The Solution: A Decentralised Learning Protocol</h3>
+        <p>The protocol offers a radical departure from conventional schooling by building a <strong>decentralised, mentor-driven learning ecosystem</strong>. Through a peer-to-peer monetary system built on the <strong>Lightning Network, Blockchain Technologies and Layer 2 Solutions</strong> and decentralised governance, it replaces outdated hierarchical structures with community-driven decision-making covering learners age 7 to 21.</p>
+
+        <div class="wp-section" id="wp-governance">
+          <h3 style="font-size:0.88rem;border:none;padding:0;margin-top:1.5rem;margin-bottom:0.8rem;"><span class="sn">2.1</span> Governance: School Improvement Proposals (SIPs)</h3>
+          <p>Governance is managed by a <strong>Council of Mentors</strong> — a multi-signature body elected by the learning community overseeing <strong>School Improvement Proposals (SIPs)</strong>, modelled on Bitcoin Improvement Proposals. A <strong>3-of-6 multi-signature scheme</strong> balances security, efficiency, and democratic decision-making.</p>
+          <figure class="wp-diagram" id="fig-sip">
+            <svg viewBox="0 0 720 480" xmlns="http://www.w3.org/2000/svg" font-family="'Space Mono',monospace">
+              <defs><marker id="s-arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#14a88f"/></marker><marker id="s-arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f0c93a"/></marker></defs>
+              <text x="360" y="32" text-anchor="middle" font-size="13" font-weight="700" fill="#f5f2ec" letter-spacing="1">SCHOOL IMPROVEMENT PROPOSALS (SIPs)</text>
+              <text x="360" y="48" text-anchor="middle" font-size="9" fill="#7aa89a">Community governance modelled on Bitcoin Improvement Proposals</text>
+              <circle cx="160" cy="118" r="26" fill="#14a88f" fill-opacity="0.12" stroke="#14a88f" stroke-width="1.5"/><text x="160" y="111" text-anchor="middle" font-size="20" fill="#14a88f">&#128100;</text><text x="160" y="153" text-anchor="middle" font-size="10" fill="#f5f2ec">Mentor</text>
+              <circle cx="560" cy="118" r="26" fill="#14a88f" fill-opacity="0.12" stroke="#14a88f" stroke-width="1.5"/><text x="560" y="111" text-anchor="middle" font-size="20" fill="#14a88f">&#127891;</text><text x="560" y="153" text-anchor="middle" font-size="10" fill="#f5f2ec">Learner</text>
+              <rect x="258" y="82" width="204" height="72" rx="10" fill="rgba(20,168,143,0.08)" stroke="#14a88f" stroke-width="1.2"/>
+              <text x="360" y="106" text-anchor="middle" font-size="11" font-weight="700" fill="#f0c93a">SIP Submission</text>
+              <text x="360" y="122" text-anchor="middle" font-size="9" fill="#7aa89a">Git issue + presentation to Council</text>
+              <line x1="186" y1="122" x2="256" y2="112" stroke="#14a88f" stroke-width="1.5" marker-end="url(#s-arr)" stroke-dasharray="5,3"/>
+              <line x1="534" y1="122" x2="464" y2="112" stroke="#14a88f" stroke-width="1.5" marker-end="url(#s-arr)" stroke-dasharray="5,3"/>
+              <line x1="360" y1="154" x2="360" y2="194" stroke="#14a88f" stroke-width="1.5" marker-end="url(#s-arr)"/>
+              <circle cx="360" cy="278" r="76" fill="rgba(20,168,143,0.04)" stroke="#14a88f" stroke-width="1" stroke-dasharray="4,4"/>
+              <text x="360" y="276" text-anchor="middle" font-size="20" fill="#f0c93a">&#9889;</text>
+              <text x="360" y="296" text-anchor="middle" font-size="9" font-weight="700" fill="#f0c93a">3-of-6 MultiSig Council</text>
+              <text x="360" y="311" text-anchor="middle" font-size="8" fill="#7aa89a">of Mentors</text>
+              <text x="360" y="215" text-anchor="middle" font-size="14" fill="#14a88f">&#128100;</text><text x="422" y="235" text-anchor="middle" font-size="14" fill="#14a88f">&#128100;</text><text x="432" y="290" text-anchor="middle" font-size="14" fill="#14a88f">&#128100;</text>
+              <text x="298" y="215" text-anchor="middle" font-size="14" fill="#14a88f">&#128100;</text><text x="288" y="290" text-anchor="middle" font-size="14" fill="#14a88f">&#128100;</text><text x="315" y="342" text-anchor="middle" font-size="14" fill="#14a88f">&#128100;</text><text x="408" y="342" text-anchor="middle" font-size="14" fill="#14a88f">&#128100;</text>
+              <line x1="432" y1="302" x2="540" y2="348" stroke="#f0c93a" stroke-width="1.5" marker-end="url(#s-arr2)"/>
+              <rect x="522" y="348" width="172" height="88" rx="10" fill="rgba(240,201,58,0.07)" stroke="#f0c93a" stroke-width="1.2"/>
+              <text x="608" y="373" text-anchor="middle" font-size="10" font-weight="700" fill="#f0c93a">Dynamic Curriculum</text>
+              <text x="608" y="389" text-anchor="middle" font-size="8" fill="#7aa89a">Approved SIPs adopted into</text>
+              <text x="608" y="403" text-anchor="middle" font-size="8" fill="#7aa89a">main repository. Funds released.</text>
+              <rect x="18" y="348" width="210" height="70" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(20,168,143,0.2)" stroke-width="1"/>
+              <text x="28" y="368" font-size="8" fill="#7aa89a">3-of-6 Lightning multisig secures treasury.</text>
+              <text x="28" y="384" font-size="8" fill="#7aa89a">50% approval needed to adopt SIP.</text>
+              <text x="28" y="400" font-size="8" fill="#7aa89a">Signatories rotate monthly.</text>
+            </svg>
+            <figcaption>Fig. 1 — SIP governance: mentor/learner submission → council vote → dynamic curriculum</figcaption>
+          </figure>
+        </div>
+
+        <div class="wp-section">
+          <h3 style="font-size:0.88rem;border:none;padding:0;margin-top:1.5rem;margin-bottom:0.8rem;"><span class="sn">2.2</span> Decentralised Learning System</h3>
+          <p>There are no traditional teachers or students — roles are fluid, and everyone is both a <strong>learner and a mentor</strong> at different stages of their journey. Progress is tracked through project completion rather than exams.</p>
+        </div>
+
+        <div class="wp-section" id="wp-financial">
+          <h3 style="font-size:0.88rem;border:none;padding:0;margin-top:1.5rem;margin-bottom:0.8rem;"><span class="sn">2.3</span> Financial Ecosystem</h3>
+          <p>Education should be <strong>financially sustainable and transparent</strong>. Tuition flows into a community-controlled multisig wallet managed by the Council:</p>
+          <ul>
+            <li><strong>No Debt-Based Tuition:</strong> Parents pay directly via the Lightning Network.</li>
+            <li><strong>Time-Locked Future Fund:</strong> 10% of tuition time-locked until the learner turns 18 — to launch a business.</li>
+            <li><strong>Transparent Resource Allocation:</strong> All transactions visible on-chain.</li>
+          </ul>
+          <figure class="wp-diagram" id="fig-timelock">
+            <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" font-family="'Space Mono',monospace">
+              <defs><marker id="t-arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#14a88f"/></marker><marker id="t-arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f0c93a"/></marker></defs>
+              <text x="360" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="#f5f2ec" letter-spacing="1">FEES &amp; TIMELOCK</text>
+              <text x="360" y="42" text-anchor="middle" font-size="9" fill="#7aa89a">On-chain tuition — 10% time-locked until learner turns 18</text>
+              <circle cx="75" cy="110" r="26" fill="rgba(20,168,143,0.1)" stroke="#14a88f" stroke-width="1.5"/>
+              <text x="75" y="103" text-anchor="middle" font-size="18" fill="#14a88f">&#128106;</text>
+              <text x="75" y="146" text-anchor="middle" font-size="10" fill="#f5f2ec">Parents</text>
+              <text x="75" y="160" text-anchor="middle" font-size="8" fill="#7aa89a">pay yearly on Lightning</text>
+              <line x1="103" y1="110" x2="205" y2="110" stroke="#14a88f" stroke-width="1.5" marker-end="url(#t-arr)"/><text x="154" y="102" text-anchor="middle" font-size="8" fill="#7aa89a">tuition fee</text>
+              <rect x="209" y="76" width="156" height="70" rx="10" fill="rgba(20,168,143,0.08)" stroke="#14a88f" stroke-width="1.3"/>
+              <text x="287" y="100" text-anchor="middle" font-size="18" fill="#f0c93a">&#9889;</text><text x="287" y="118" text-anchor="middle" font-size="10" font-weight="700" fill="#f0c93a">3-of-6 MultiSig</text><text x="287" y="133" text-anchor="middle" font-size="8" fill="#7aa89a">Community Treasury</text>
+              <line x1="365" y1="98" x2="448" y2="76" stroke="#14a88f" stroke-width="1.5" marker-end="url(#t-arr)"/><text x="410" y="72" text-anchor="middle" font-size="8" fill="#7aa89a">90%</text>
+              <rect x="451" y="56" width="140" height="48" rx="8" fill="rgba(20,168,143,0.06)" stroke="#14a88f" stroke-width="1"/>
+              <text x="521" y="76" text-anchor="middle" font-size="10" font-weight="700" fill="#f5f2ec">Learner Fund</text><text x="521" y="92" text-anchor="middle" font-size="8" fill="#7aa89a">HODL or spend on SIPs</text>
+              <line x1="365" y1="128" x2="448" y2="158" stroke="#f0c93a" stroke-width="1.5" marker-end="url(#t-arr2)" stroke-dasharray="5,3"/><text x="412" y="154" text-anchor="middle" font-size="8" fill="#f0c93a">10%</text>
+              <rect x="451" y="143" width="140" height="66" rx="8" fill="rgba(240,201,58,0.06)" stroke="#f0c93a" stroke-width="1.3"/>
+              <text x="521" y="165" text-anchor="middle" font-size="16" fill="#f0c93a">&#128274;</text><text x="521" y="184" text-anchor="middle" font-size="10" font-weight="700" fill="#f0c93a">Timelock</text><text x="521" y="199" text-anchor="middle" font-size="8" fill="#7aa89a">Unlocks at age 18</text>
+              <line x1="591" y1="176" x2="644" y2="176" stroke="#f0c93a" stroke-width="1.5" marker-end="url(#t-arr2)"/>
+              <circle cx="662" cy="176" r="20" fill="rgba(240,201,58,0.1)" stroke="#f0c93a" stroke-width="1.2"/>
+              <text x="662" y="169" text-anchor="middle" font-size="16" fill="#f0c93a">&#127891;</text>
+              <text x="662" y="206" text-anchor="middle" font-size="9" fill="#f5f2ec">Learner</text><text x="662" y="218" text-anchor="middle" font-size="8" fill="#7aa89a">age 18+</text>
+              <rect x="14" y="238" width="178" height="96" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(20,168,143,0.2)" stroke-width="1"/>
+              <text x="103" y="258" text-anchor="middle" font-size="9" font-weight="700" fill="#f0c93a">MultiSig Council</text>
+              <text x="24" y="274" font-size="8" fill="#7aa89a">2 x Learners</text><text x="24" y="290" font-size="8" fill="#7aa89a">2 x Parents</text><text x="24" y="306" font-size="8" fill="#7aa89a">2 x Mentors / Guides</text><text x="24" y="322" font-size="8" fill="#7aa89a">Rotation monthly</text>
+              <line x1="521" y1="104" x2="521" y2="276" stroke="#14a88f" stroke-width="1" stroke-dasharray="3,3"/>
+              <line x1="521" y1="276" x2="210" y2="276" stroke="#14a88f" stroke-width="1" marker-end="url(#t-arr)" stroke-dasharray="3,3"/>
+              <rect x="210" y="250" width="148" height="50" rx="8" fill="rgba(20,168,143,0.05)" stroke="rgba(20,168,143,0.2)" stroke-width="1"/>
+              <text x="284" y="270" text-anchor="middle" font-size="9" font-weight="700" fill="#f5f2ec">Dynamic Curriculum</text><text x="284" y="286" text-anchor="middle" font-size="8" fill="#7aa89a">SIP-funded programs</text>
+            </svg>
+            <figcaption>Fig. 2 — Fee flow: tuition → 3-of-6 multisig → learner fund (90%) + timelock (10%)</figcaption>
+          </figure>
+        </div>
+
+        <div class="wp-section" id="wp-identity">
+          <h3 style="font-size:0.88rem;border:none;padding:0;margin-top:1.5rem;margin-bottom:0.8rem;"><span class="sn">2.4</span> Digital Identity, Communication &amp; Learning Records</h3>
+          <p>Learners, mentors, and parents communicate via the <strong>Nostr protocol</strong> with public/private keypairs. Learners maintain a <strong>Git repository</strong> as their immutable, verifiable learning record — replacing traditional report cards.</p>
+          <figure class="wp-diagram" id="fig-id">
+            <svg viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg" font-family="'Space Mono',monospace">
+              <defs><marker id="i-arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#14a88f"/></marker><marker id="i-arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f0c93a"/></marker></defs>
+              <text x="360" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="#f5f2ec" letter-spacing="1">DIGITAL IDENTITY &amp; COMMUNICATION</text>
+              <text x="360" y="42" text-anchor="middle" font-size="9" fill="#7aa89a">Nostr keypairs — asymmetric encryption between all participants</text>
+              <circle cx="210" cy="110" r="28" fill="rgba(20,168,143,0.1)" stroke="#14a88f" stroke-width="1.5"/>
+              <text x="210" y="103" text-anchor="middle" font-size="22" fill="#14a88f">&#128100;</text><text x="210" y="149" text-anchor="middle" font-size="10" fill="#f5f2ec">Mentors</text>
+              <circle cx="510" cy="110" r="28" fill="rgba(20,168,143,0.1)" stroke="#14a88f" stroke-width="1.5"/>
+              <text x="510" y="103" text-anchor="middle" font-size="22" fill="#14a88f">&#128106;</text><text x="510" y="149" text-anchor="middle" font-size="10" fill="#f5f2ec">Parents</text>
+              <circle cx="360" cy="262" r="34" fill="rgba(240,201,58,0.08)" stroke="#f0c93a" stroke-width="1.8"/>
+              <text x="360" y="254" text-anchor="middle" font-size="26" fill="#f0c93a">&#127891;</text>
+              <text x="360" y="307" text-anchor="middle" font-size="10" fill="#f5f2ec">Learner</text>
+              <text x="360" y="322" text-anchor="middle" font-size="7" fill="#7aa89a">npub: c21114087cbe5bfd48...</text>
+              <line x1="238" y1="126" x2="330" y2="234" stroke="#14a88f" stroke-width="1.3" stroke-dasharray="5,3" marker-end="url(#i-arr)"/>
+              <line x1="327" y1="238" x2="234" y2="130" stroke="#14a88f" stroke-width="1.3" stroke-dasharray="5,3" marker-end="url(#i-arr)"/>
+              <line x1="482" y1="126" x2="390" y2="234" stroke="#14a88f" stroke-width="1.3" stroke-dasharray="5,3" marker-end="url(#i-arr)"/>
+              <line x1="393" y1="238" x2="486" y2="130" stroke="#14a88f" stroke-width="1.3" stroke-dasharray="5,3" marker-end="url(#i-arr)"/>
+              <line x1="238" y1="110" x2="482" y2="110" stroke="#14a88f" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.3"/>
+              <rect x="44" y="305" width="116" height="90" rx="10" fill="rgba(20,168,143,0.07)" stroke="#14a88f" stroke-width="1.2"/>
+              <text x="102" y="328" text-anchor="middle" font-size="18" fill="#14a88f">&#128197;</text><text x="102" y="348" text-anchor="middle" font-size="9" font-weight="700" fill="#f5f2ec">Calendar</text><text x="102" y="364" text-anchor="middle" font-size="7.5" fill="#7aa89a">self-managed</text><text x="102" y="378" text-anchor="middle" font-size="7.5" fill="#7aa89a">shared w/ mentors</text>
+              <rect x="558" y="305" width="124" height="90" rx="10" fill="rgba(240,201,58,0.07)" stroke="#f0c93a" stroke-width="1.2"/>
+              <text x="620" y="328" text-anchor="middle" font-size="18" fill="#f0c93a">&#128450;&#65039;</text><text x="620" y="348" text-anchor="middle" font-size="9" font-weight="700" fill="#f5f2ec">Git Portfolio</text><text x="620" y="364" text-anchor="middle" font-size="7.5" fill="#7aa89a">immutable record</text><text x="620" y="378" text-anchor="middle" font-size="7.5" fill="#7aa89a">replaces report cards</text>
+              <line x1="328" y1="288" x2="162" y2="322" stroke="#14a88f" stroke-width="1.2" marker-end="url(#i-arr)" stroke-dasharray="4,3"/>
+              <line x1="392" y1="288" x2="556" y2="322" stroke="#f0c93a" stroke-width="1.2" marker-end="url(#i-arr2)" stroke-dasharray="4,3"/>
+              <rect x="572" y="56" width="128" height="50" rx="8" fill="rgba(240,201,58,0.07)" stroke="#f0c93a" stroke-width="1"/>
+              <text x="636" y="76" text-anchor="middle" font-size="9" font-weight="700" fill="#f0c93a">Nostr Protocol</text><text x="636" y="91" text-anchor="middle" font-size="7.5" fill="#7aa89a">public/private keypairs</text><text x="636" y="103" text-anchor="middle" font-size="7.5" fill="#7aa89a">end-to-end encrypted</text>
+            </svg>
+            <figcaption>Fig. 3 — Identity: Nostr keypairs link learners, mentors, and parents to calendar and Git portfolio</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="wp-section" id="wp-programs">
+        <h3><span class="sn">03.</span> Core Didactic Learning Programs</h3>
+        <h4>3.1 Time Management &amp; Calendar Coordination</h4>
+        <ul>
+          <li><strong>Calendar Training</strong> — Introduction to digital calendars and scheduling tools.</li>
+          <li><strong>Task Prioritisation</strong> — Distinguishing between urgent and important tasks.</li>
+          <li><strong>Time Audits</strong> — Logging and reviewing how time is allocated to activities.</li>
+          <li><strong>Mentor &amp; Parent Transparency</strong> — Schedules shared for mutual accountability.</li>
+        </ul>
+        <h4>3.2 Financial Literacy &amp; Blockchain Technologies</h4>
+        <ul>
+          <li><strong>Understanding Money</strong> — From barter systems to modern currencies and the Lightning Network.</li>
+          <li><strong>Setting Up a Signing Device</strong> — Hands-on experience with hardware and software wallets.</li>
+          <li><strong>Public/Private Keys &amp; UTXOs</strong> — Cryptographic keys, the UTXO model, and how transactions work.</li>
+          <li><strong>Blockchain Analysis</strong> — Exploring block explorers to understand on-chain transactions and privacy.</li>
+        </ul>
+        <h4>3.3 Reflection &amp; Digital Portfolio Management via Git</h4>
+        <ul>
+          <li><strong>Version Control Basics</strong> — Git as a tool for tracking changes in personal and collaborative projects.</li>
+          <li><strong>Markdown for Documentation</strong> — Writing and formatting project reflections and learning records.</li>
+          <li><strong>Portfolio Hosting</strong> — Personal Git repository for self-assessment and external evaluation.</li>
+        </ul>
+      </div>
+
+      <div class="wp-section" id="wp-conclusion">
+        <h3><span class="sn">04.</span> Conclusion</h3>
+        <p>This protocol provides a future-ready, decentralised alternative to traditional education by integrating community-driven governance, financial sustainability built on the Lightning Network, and self-directed learning. Through a transparent financial model and a mentorship-driven framework, it empowers learners to take full control of their education and future.</p>
+        <p>By incorporating problem-based learning, financial literacy, time management, and digital portfolio management, the protocol equips learners with the skills needed to navigate an ever-evolving economy.</p>
+        <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;">
+          <a href="index.html" class="btn btn-outline" style="width:auto;font-size:0.75rem;">← Back to DPF</a>
+          <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank" class="btn btn-outline" style="width:auto;font-size:0.75rem;">GNU GPL v3.0 ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const drawer = document.getElementById('navDrawer');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    drawer.classList.toggle('open');
+  });
+  drawer.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      drawer.classList.remove('open');
+    });
+  });
+
+  const toggle = document.getElementById('themeToggle');
+  if (localStorage.getItem('dpf-theme') === 'light') {
+    document.body.classList.add('light');
+  }
+  toggle.addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('light');
+    localStorage.setItem('dpf-theme', isLight ? 'light' : 'dark');
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e,i) => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i*80); io.unobserve(e.target); }
+    });
+  }, {threshold:0.08});
+  reveals.forEach(r => io.observe(r));
+</script>
+</body>
+</html>
