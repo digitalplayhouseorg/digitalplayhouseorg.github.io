@@ -44,7 +44,6 @@
     backdrop-filter: blur(14px);
     z-index: 100;
   }
-
   .logo {
     display: flex;
     align-items: center;
@@ -80,7 +79,6 @@
     font-size: 0.62rem;
     letter-spacing: 0.12em;
   }
-
   .header-right {
     display: flex;
     align-items: center;
@@ -127,7 +125,6 @@
     background: radial-gradient(ellipse, rgba(247,147,26,0.07) 0%, transparent 68%);
     pointer-events: none;
   }
-
   .eyebrow {
     font-family: 'Space Mono', monospace;
     font-size: 0.65rem;
@@ -145,7 +142,6 @@
     color: var(--text);
     margin-bottom: 32px;
   }
-
   .debt-clock-wrap {
     position: relative;
     display: inline-block;
@@ -176,34 +172,123 @@
     vertical-align: bottom;
     margin-bottom: 6px;
   }
-
-  .currency-toggle {
-    margin-top: 24px;
-    display: flex;
-    gap: 0;
-    justify-content: center;
+  /* ── SUPPLY SECTION ── */
+  .supply-section {
+    padding: 48px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-  .currency-toggle button {
+  .supply-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    color: var(--muted);
+    border-radius: 8px;
+    padding: 32px 36px;
+  }
+  .supply-intro {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .supply-progress-wrap {
+    margin: 0 0 10px;
+  }
+  .supply-progress-track {
+    width: 100%;
+    height: 16px;
+    background: var(--surface2);
+    border-radius: 99px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .supply-progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--orange-dim), var(--orange));
+  }
+  .supply-progress-labels {
+    display: flex;
+    justify-content: space-between;
     font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    padding: 7px 22px;
-    cursor: pointer;
-    transition: all 0.15s;
-    letter-spacing: 0.12em;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-top: 7px;
+  }
+  .supply-progress-pct {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--orange);
+    text-align: center;
+    margin-top: 4px;
+    margin-bottom: 20px;
+  }
+  .supply-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+  .supply-cell {
+    background: var(--surface2);
+    padding: 16px 20px;
+  }
+  .supply-cell-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
   }
-  .currency-toggle button:first-child { border-radius: 4px 0 0 4px; }
-  .currency-toggle button:last-child  { border-radius: 0 4px 4px 0; }
-  .currency-toggle button.active {
-    background: var(--orange);
-    color: #000;
-    border-color: var(--orange);
+  .supply-cell-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.05rem;
     font-weight: 700;
+    color: var(--bright);
   }
-
+  .supply-cell-value.orange { color: var(--orange); }
+  .supply-cell-value.green  { color: var(--green); }
+  .supply-cell-value.red    { color: var(--red); }
+  .supply-cell-sub {
+    font-size: 0.62rem;
+    color: var(--muted);
+    margin-top: 3px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .halving-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 20px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .halving-cell {
+    flex: 1;
+    background: var(--surface2);
+    padding: 14px 18px;
+    border-right: 1px solid var(--border);
+  }
+  .halving-cell:last-child { border-right: none; }
+  .supply-note {
+    margin-top: 18px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    line-height: 1.7;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .supply-note strong { color: var(--orange); }
   .debt-note {
     margin-top: 14px;
     font-size: 0.68rem;
@@ -220,49 +305,63 @@
   }
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 1px;
-    background: var(--border);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 8px;
     overflow: hidden;
   }
   .stat-card {
     background: var(--surface);
-    padding: 20px 22px;
-    transition: background 0.18s;
+    padding: 22px 24px;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+    position: relative;
   }
+  /* remove right border on every 4th card */
+  .stat-card:nth-child(4n) { border-right: none; }
+  /* remove bottom border on last row (cards 5-8) */
+  .stat-card:nth-child(n+5) { border-bottom: none; }
   .stat-card:hover { background: var(--surface2); }
   .stat-label {
-    font-size: 0.62rem;
-    letter-spacing: 0.16em;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-family: 'Space Mono', monospace;
   }
   .stat-value {
     font-family: 'Space Mono', monospace;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: var(--bright);
     line-height: 1;
+    letter-spacing: -0.02em;
   }
   .stat-value.danger { color: var(--red); }
   .stat-value.warn   { color: var(--orange); }
   .stat-sub {
-    font-size: 0.65rem;
+    font-size: 0.64rem;
     color: var(--muted);
-    margin-top: 5px;
+    margin-top: 7px;
     font-family: 'Space Grotesk', sans-serif;
   }
   .interest-ticker {
     font-family: 'Space Mono', monospace;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     color: var(--red);
   }
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-card:nth-child(4n) { border-right: 1px solid var(--border); }
+    .stat-card:nth-child(2n) { border-right: none; }
+    .stat-card:nth-child(n+5) { border-bottom: 1px solid var(--border); }
+    .stat-card:nth-child(n+7) { border-bottom: none; }
+  }
 
-  /* ── DIVIDER ── */
+  /* ── SECTION DIVIDER ── */
   .section-divider {
     border: none;
     border-top: 1px solid var(--border);
@@ -280,9 +379,9 @@
     font-size: 1rem;
   }
 
-  /* ── LIGHTNING SECTION ── */
-  .btc-section {
-    padding: 48px 40px 60px;
+  /* ── PAYBACK SECTION ── */
+  .payback-section {
+    padding: 48px 40px;
     max-width: 1200px;
     margin: 0 auto;
   }
@@ -296,6 +395,165 @@
     margin-bottom: 28px;
     opacity: 0.85;
   }
+  .payback-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px 36px;
+  }
+  .payback-top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 28px;
+    margin-bottom: 28px;
+  }
+  .payback-input-block { }
+  .payback-input-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .payback-input-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .payback-prefix {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    padding: 10px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--orange);
+    white-space: nowrap;
+  }
+  .payback-input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 0 5px 5px 0;
+    padding: 10px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    color: var(--bright);
+    outline: none;
+    transition: border-color 0.15s;
+    min-width: 0;
+  }
+  .payback-input:focus { border-color: var(--orange); }
+  .payback-equals {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.6rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  .payback-result-block {
+    text-align: right;
+  }
+  .payback-result-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .payback-result-value {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1;
+  }
+  .payback-result-unit {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .payback-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .pb-cell {
+    background: var(--surface2);
+    padding: 14px 18px;
+  }
+  .pb-cell-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .pb-cell-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--bright);
+  }
+
+  .payback-caveat {
+    font-size: 0.67rem;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    line-height: 1.6;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .payback-caveat strong {
+    color: var(--orange);
+    font-weight: 700;
+  }
+
+  /* net position note — debt grows faster than $1/s */
+  .net-position {
+    background: linear-gradient(135deg, rgba(232,64,64,0.07), rgba(247,147,26,0.04));
+    border: 1px solid rgba(232,64,64,0.2);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .net-position .net-label {
+    color: var(--red);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    margin-bottom: 4px;
+  }
+  .net-position .net-val { color: var(--red); font-weight: 700; }
+
+  @media (max-width: 768px) {
+    .payback-top { grid-template-columns: 1fr; }
+    .payback-equals { text-align: left; }
+    .payback-result-block { text-align: left; }
+  }
+
+  /* ── MAINNET TOOLS SECTION ── */
+  .btc-section {
+    padding: 48px 40px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
   .btc-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -304,7 +562,7 @@
   @media (max-width: 768px) {
     .btc-grid { grid-template-columns: 1fr; }
     header { padding: 14px 20px; }
-    .debt-hero, .stats-section, .btc-section { padding-left: 20px; padding-right: 20px; }
+    .debt-hero, .stats-section, .btc-section, .payback-section { padding-left: 20px; padding-right: 20px; }
     .section-divider { margin: 0 20px; }
   }
 
@@ -377,7 +635,6 @@
   }
   .swap-arrow:hover { color: var(--orange); }
 
-  /* Price strip */
   .btc-price-strip {
     display: flex;
     align-items: center;
@@ -409,7 +666,6 @@
   .btc-price-change.up   { color: var(--green); }
   .btc-price-change.down { color: var(--red); }
 
-  /* Sats table */
   .sats-table {
     width: 100%;
     border-collapse: collapse;
@@ -438,7 +694,6 @@
   .sats-table td:first-child { color: var(--orange); }
   .sats-table td:last-child  { color: var(--bright); font-weight: 700; }
 
-  /* Debt in LN box */
   .debt-per-sat-box {
     background: linear-gradient(135deg, rgba(232,64,64,0.07), rgba(247,147,26,0.04));
     border: 1px solid rgba(247,147,26,0.18);
@@ -481,15 +736,7 @@
   }
   footer a { color: var(--muted); text-decoration: none; }
   footer a:hover { color: var(--orange); }
-  .footer-brand {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 0.62rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
+  .footer-brand { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; }
   .footer-brand span { color: var(--orange); }
 </style>
 </head>
@@ -516,14 +763,8 @@
 <section class="debt-hero">
   <div class="eyebrow">National Debt of Australia — Real Time</div>
   <div class="debt-title">Australian Government Gross Debt</div>
-
   <div class="debt-clock-wrap">
-    <span class="debt-currency" id="currency-symbol">A$</span><span id="debt-number">1,161,862,669,000</span><span class="debt-cents" id="debt-cents">.00</span>
-  </div>
-
-  <div class="currency-toggle">
-    <button class="active" id="btn-aud" onclick="setCurrency('AUD')">AUD</button>
-    <button id="btn-usd" onclick="setCurrency('USD')">USD</button>
+    <span class="debt-currency">A$</span><span id="debt-number">1,161,862,669,000</span><span class="debt-cents" id="debt-cents">.00</span>
   </div>
 
   <p class="debt-note">▲ Increasing ~A$1,105 per second · Source: IMF / World Bank</p>
@@ -577,19 +818,166 @@
 
 <hr class="section-divider">
 
-<!-- LIGHTNING TOOLS -->
+<!-- PAYBACK CALCULATOR -->
+<section class="payback-section">
+  <div class="section-eyebrow">Debt Repayment Calculator</div>
+  <div class="payback-card">
+
+    <div class="payback-top">
+      <div class="payback-input-block">
+        <div class="payback-input-label">Repayment rate (AUD per second)</div>
+        <div class="payback-input-row">
+          <div class="payback-prefix">A$ / sec</div>
+          <input class="payback-input" id="repay-rate" type="number" value="1" min="0.01" step="1" oninput="updatePayback()">
+        </div>
+      </div>
+      <div class="payback-equals">=</div>
+      <div class="payback-result-block">
+        <div class="payback-result-label">Time to pay off current debt</div>
+        <div class="payback-result-value" id="pb-years">—</div>
+        <div class="payback-result-unit" id="pb-years-unit">years</div>
+      </div>
+    </div>
+
+    <!-- Net position warning (shown when rate <= interest accrual) -->
+    <div class="net-position" id="net-position-box">
+      <div class="net-label">⚠ Net Position</div>
+      <span id="net-position-text">At A$1/sec your payments total A$31.5M/year — but interest alone accrues ~A$34.86B/year. The debt grows faster than you pay it.</span>
+    </div>
+
+    <!-- Breakdown cells -->
+    <div class="payback-breakdown">
+      <div class="pb-cell">
+        <div class="pb-cell-label">Seconds</div>
+        <div class="pb-cell-value" id="pb-sec">—</div>
+      </div>
+      <div class="pb-cell">
+        <div class="pb-cell-label">Minutes</div>
+        <div class="pb-cell-value" id="pb-min">—</div>
+      </div>
+      <div class="pb-cell">
+        <div class="pb-cell-label">Hours</div>
+        <div class="pb-cell-value" id="pb-hrs">—</div>
+      </div>
+      <div class="pb-cell">
+        <div class="pb-cell-label">Days</div>
+        <div class="pb-cell-value" id="pb-days">—</div>
+      </div>
+      <div class="pb-cell">
+        <div class="pb-cell-label">Years</div>
+        <div class="pb-cell-value" id="pb-yrs">—</div>
+      </div>
+      <div class="pb-cell">
+        <div class="pb-cell-label">Total paid</div>
+        <div class="pb-cell-value" id="pb-total">—</div>
+      </div>
+    </div>
+
+    <div class="payback-caveat">
+      <strong>Note:</strong> this assumes a static debt with no further accrual — a freeze-frame calculation. In reality the debt grows by ~A$1,105 every second. To keep pace with interest alone you'd need to pay <strong>A$1,105/sec</strong> (~A$34.86B/year). Set the rate above to see what actually makes a dent.
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- BTC SUPPLY -->
+<section class="supply-section">
+  <div class="section-eyebrow">BTC Supply</div>
+  <div class="supply-card">
+
+    <p class="supply-intro">
+      There will only ever be <strong style="color:var(--orange)">21,000,000 BTC</strong>. New coins are released with every block via the block subsidy, which halves roughly every four years. Once all 21 million are mined — estimated around the year 2140 — no new supply will ever enter circulation.
+    </p>
+
+    <div class="supply-progress-wrap">
+      <div class="supply-progress-track">
+        <div class="supply-progress-fill" id="supply-bar" style="width:0%"></div>
+      </div>
+      <div class="supply-progress-labels">
+        <span>0 BTC</span>
+        <span>21,000,000 BTC (hard cap)</span>
+      </div>
+      <div class="supply-progress-pct" id="supply-pct">— mined so far</div>
+    </div>
+
+    <div class="supply-grid">
+      <div class="supply-cell">
+        <div class="supply-cell-label">Total Supply Cap</div>
+        <div class="supply-cell-value orange">21,000,000</div>
+        <div class="supply-cell-sub">BTC · fixed forever</div>
+      </div>
+      <div class="supply-cell">
+        <div class="supply-cell-label">Mined to Date</div>
+        <div class="supply-cell-value" id="sc-mined">—</div>
+        <div class="supply-cell-sub">approx. circulating</div>
+      </div>
+      <div class="supply-cell">
+        <div class="supply-cell-label">Remaining to Mine</div>
+        <div class="supply-cell-value red" id="sc-remaining">—</div>
+        <div class="supply-cell-sub">BTC left in subsidy</div>
+      </div>
+      <div class="supply-cell">
+        <div class="supply-cell-label">% Already Mined</div>
+        <div class="supply-cell-value orange" id="sc-pct">—</div>
+        <div class="supply-cell-sub">of hard cap</div>
+      </div>
+      <div class="supply-cell">
+        <div class="supply-cell-label">Current Block Height</div>
+        <div class="supply-cell-value" id="sc-height">—</div>
+        <div class="supply-cell-sub">mainnet</div>
+      </div>
+      <div class="supply-cell">
+        <div class="supply-cell-label">Current Subsidy</div>
+        <div class="supply-cell-value green" id="sc-subsidy">3.125 BTC</div>
+        <div class="supply-cell-sub">per block</div>
+      </div>
+    </div>
+
+    <div class="halving-row">
+      <div class="halving-cell">
+        <div class="supply-cell-label">Current Epoch</div>
+        <div class="supply-cell-value orange" id="sc-epoch">—</div>
+        <div class="supply-cell-sub">halving era</div>
+      </div>
+      <div class="halving-cell">
+        <div class="supply-cell-label">Blocks Until Next Halving</div>
+        <div class="supply-cell-value" id="sc-blocks-to-halving">—</div>
+        <div class="supply-cell-sub" id="sc-halving-date">est. date —</div>
+      </div>
+      <div class="halving-cell">
+        <div class="supply-cell-label">Next Subsidy</div>
+        <div class="supply-cell-value green" id="sc-next-subsidy">1.5625 BTC</div>
+        <div class="supply-cell-sub">per block after halving</div>
+      </div>
+      <div class="halving-cell">
+        <div class="supply-cell-label">Final BTC Mined</div>
+        <div class="supply-cell-value">~2140</div>
+        <div class="supply-cell-sub">last sat issued</div>
+      </div>
+    </div>
+
+    <div class="supply-note">
+      <strong>Lost coins:</strong> an estimated 3–4 million BTC are permanently lost (forgotten keys, early burns, Satoshi's dormant coins). The effective circulating supply is lower than the mined total. <strong>Remaining supply</strong> figures use on-chain block height data via the Anthropic web search tool.
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- MAINNET TOOLS -->
 <section class="btc-section">
-  <div class="section-eyebrow">Lightning Network Tools</div>
+  <div class="section-eyebrow">Mainnet Tools</div>
   <div class="btc-grid">
 
     <!-- CONVERTER -->
     <div class="btc-card">
-      <div class="btc-card-title">BTC ↔ AUD Converter</div>
+      <div class="btc-card-title">Mainnet ↔ AUD Converter</div>
       <div class="btc-card-sub" id="btc-rate-sub">Fetching live price…</div>
 
       <div class="converter-fields">
         <div class="input-group">
-          <div class="input-label"><span class="token">₿</span> Bitcoin (BTC)</div>
+          <div class="input-label"><span class="token">₿</span> BTC (mainnet)</div>
           <input class="converter-input" id="input-btc" type="number" placeholder="0.00000000" step="0.00000001" oninput="convertFrom('btc')">
         </div>
 
@@ -615,7 +1003,7 @@
       </div>
 
       <div class="debt-per-sat-box">
-        <div class="dps-label">🇦🇺 National Debt in Bitcoin</div>
+        <div class="dps-label">🇦🇺 National Debt in BTC</div>
         <div class="dps-value" id="debt-in-btc">— BTC</div>
         <div class="dps-sub" id="debt-in-sats">— satoshis</div>
       </div>
@@ -667,8 +1055,7 @@
   const INTEREST_PER_SECOND_AUD = 1105;
   let debtStart = BASE_DEBT_AUD;
   let sessionStartMs = Date.now();
-  let currentCurrency = 'AUD';
-  let fxUsdAud = 0.66;
+  let fxUsdAud = 0.66; // still used for USD BTC price cross-rate
   let btcAudPrice = null;
   let btcChangePercent = null;
 
@@ -696,19 +1083,9 @@
 
   function updateDebtDisplay() {
     const raw = getCurrentDebt();
-    let display = raw;
-    let symbol = 'A$';
-
-    if (currentCurrency === 'USD') {
-      display = raw * fxUsdAud;
-      symbol = 'US$';
-    }
-
-    const { int, dec } = formatDebt(display, 2);
-    document.getElementById('currency-symbol').textContent = symbol;
+    const { int, dec } = formatDebt(raw, 2);
     document.getElementById('debt-number').textContent = int;
     document.getElementById('debt-cents').textContent = dec;
-
     if (btcAudPrice) {
       const debtInBtc = raw / btcAudPrice;
       const debtInSats = Math.round(debtInBtc * 1e8);
@@ -716,73 +1093,104 @@
       document.getElementById('debt-in-sats').textContent = debtInSats.toLocaleString('en-AU') + ' satoshis';
     }
   }
-
   setInterval(updateDebtDisplay, 100);
 
-  function setCurrency(c) {
-    currentCurrency = c;
-    document.getElementById('btn-aud').classList.toggle('active', c === 'AUD');
-    document.getElementById('btn-usd').classList.toggle('active', c === 'USD');
+
+
+  // ── PAYBACK CALCULATOR ──
+  // Snapshot the debt once at page load for payback calculations.
+  // Using the live debt would cause the result to creep upward as you type.
+  const PAYBACK_DEBT_SNAPSHOT = getCurrentDebt();
+
+  function fmtBig(n) {
+    if (n >= 1e12) return (n / 1e12).toLocaleString('en-AU', { maximumFractionDigits: 2 }) + 'T';
+    if (n >= 1e9)  return (n / 1e9).toLocaleString('en-AU',  { maximumFractionDigits: 2 }) + 'B';
+    if (n >= 1e6)  return (n / 1e6).toLocaleString('en-AU',  { maximumFractionDigits: 2 }) + 'M';
+    return n.toLocaleString('en-AU', { maximumFractionDigits: 0 });
   }
 
-  // ── BTC PRICE ──
+  function updatePayback() {
+    const rateRaw = parseFloat(document.getElementById('repay-rate').value);
+    const rate = isNaN(rateRaw) || rateRaw <= 0 ? 1 : rateRaw;
+    const debt = PAYBACK_DEBT_SNAPSHOT;
+
+    const totalSeconds = debt / rate;
+    const totalMinutes = totalSeconds / 60;
+    const totalHours   = totalMinutes / 60;
+    const totalDays    = totalHours   / 24;
+    const totalYears   = totalDays    / 365.25;
+
+    document.getElementById('pb-sec').textContent  = fmtBig(totalSeconds);
+    document.getElementById('pb-min').textContent  = fmtBig(totalMinutes);
+    document.getElementById('pb-hrs').textContent  = fmtBig(totalHours);
+    document.getElementById('pb-days').textContent = fmtBig(totalDays);
+    document.getElementById('pb-yrs').textContent  = fmtBig(totalYears);
+    document.getElementById('pb-total').textContent = 'A$' + fmtBig(debt);
+
+    // Main headline — years with human-readable label
+    const yearsRounded = Math.round(totalYears);
+    document.getElementById('pb-years').textContent = fmtBig(totalYears);
+    document.getElementById('pb-years-unit').textContent =
+      totalYears >= 1000 ? 'years (longer than recorded human history)' :
+      totalYears >= 100  ? 'years (multiple lifetimes)' :
+      totalYears >= 10   ? 'years' : 'years';
+
+    // Net position warning
+    const netBox  = document.getElementById('net-position-box');
+    const netText = document.getElementById('net-position-text');
+    const annualPayment = rate * 31557600; // seconds per year
+    const ANNUAL_INTEREST = 34860000000;
+
+    if (annualPayment <= ANNUAL_INTEREST) {
+      netBox.style.display = 'block';
+      const shortfall = ANNUAL_INTEREST - annualPayment;
+      netText.innerHTML =
+        `At A$${rate.toLocaleString('en-AU')}/sec your payments total ` +
+        `<span class="net-val">A$${fmtBig(annualPayment)}/year</span> — ` +
+        `but interest alone accrues ~A$34.86B/year. ` +
+        `The debt grows by ~<span class="net-val">A$${fmtBig(shortfall)}/year</span> even as you pay. ` +
+        `You need at least <strong>A$1,105/sec</strong> just to stop the bleed.`;
+    } else {
+      netBox.style.display = 'none';
+    }
+  }
+
+  // Run once on load
+  updatePayback();
+
+  // ── MAINNET PRICE ──
   let lastEditedField = null;
   let priceSource = null;
 
-  async function fetchFromCoinGecko() {
-    const res = await fetch(
-      'https://api.coingecko.com/api/v3/simple/price' +
-      '?ids=bitcoin&vs_currencies=aud,usd&include_24hr_change=true',
-      { cache: 'no-store' }
-    );
-    if (!res.ok) throw new Error('CoinGecko HTTP ' + res.status);
-    const data = await res.json();
-    const b = data.bitcoin;
-    if (!b || typeof b.aud !== 'number') throw new Error('Bad CoinGecko payload');
-    if (typeof b.usd === 'number' && b.aud > 0) {
-      fxUsdAud = b.usd / b.aud;
-    }
-    return { price: b.aud, change: b.aud_24h_change ?? 0, source: 'CoinGecko' };
-  }
-
-  async function fetchFromClaudeSearch() {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 300,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        system: 'You are a price lookup assistant. Always respond with ONLY a valid JSON object, no markdown, no explanation. Format: {"price_aud": <number>, "change_24h": <number>}',
-        messages: [{ role: 'user', content: 'What is the current Bitcoin price in Australian dollars (AUD) and the 24-hour percentage change? Return ONLY JSON: {"price_aud": <number>, "change_24h": <number>}' }]
-      })
-    });
-    const raw = await res.json();
-    const textBlock = raw.content && raw.content.filter(b => b.type === 'text').pop();
-    if (!textBlock) throw new Error('No text in response');
-    const clean = textBlock.text.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(clean);
-    if (typeof parsed.price_aud !== 'number') throw new Error('Bad parsed payload');
-    return { price: parsed.price_aud, change: parsed.change_24h ?? 0, source: 'web search' };
-  }
-
   async function fetchBtcPrice() {
-    let result;
+    document.getElementById('btc-rate-sub').textContent = 'Fetching live price…';
     try {
-      result = await fetchFromCoinGecko();
-    } catch (e1) {
-      console.warn('CoinGecko failed, falling back to web search:', e1);
-      try {
-        result = await fetchFromClaudeSearch();
-      } catch (e2) {
-        console.error('All BTC price sources failed:', e2);
-        if (!btcAudPrice) {
-          document.getElementById('btc-rate-sub').textContent = 'Price fetch failed — retrying…';
-        }
-        return;
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 300,
+          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+          system: 'You are a price lookup assistant. Always respond with ONLY a valid JSON object — no markdown, no explanation, no code fences. Format: {"price_aud": <number>, "price_usd": <number>, "change_24h": <number>}',
+          messages: [{ role: 'user', content: 'What is the current BTC price in Australian dollars (AUD) and US dollars (USD), and the 24-hour percentage change? Return ONLY a raw JSON object: {"price_aud": <number>, "price_usd": <number>, "change_24h": <number>}' }]
+        })
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      const textBlock = data.content && data.content.filter(b => b.type === 'text').pop();
+      if (!textBlock) throw new Error('No text block in response');
+      const clean = textBlock.text.replace(/```[\w]*|```/g, '').trim();
+      const parsed = JSON.parse(clean);
+      if (typeof parsed.price_aud !== 'number') throw new Error('Missing price_aud');
+      if (typeof parsed.price_usd === 'number' && parsed.price_aud > 0) {
+        fxUsdAud = parsed.price_usd / parsed.price_aud;
       }
+      applyBtcPrice(parsed.price_aud, parsed.change_24h ?? 0, 'web search');
+    } catch (err) {
+      console.error('Price fetch failed:', err);
+      if (!btcAudPrice) document.getElementById('btc-rate-sub').textContent = 'Price fetch failed — retrying…';
     }
-    applyBtcPrice(result.price, result.change, result.source);
   }
 
   function applyBtcPrice(price, change, source) {
@@ -808,11 +1216,7 @@
       const audStr = aud < 0.01 ? aud.toFixed(8) :
                      aud < 1    ? aud.toFixed(4) :
                      'A$' + aud.toLocaleString('en-AU', { maximumFractionDigits: 2 });
-      return `<tr>
-        <td>${sats.toLocaleString()}</td>
-        <td>${btc.toFixed(8)}</td>
-        <td>${audStr}</td>
-      </tr>`;
+      return `<tr><td>${sats.toLocaleString()}</td><td>${btc.toFixed(8)}</td><td>${audStr}</td></tr>`;
     }).join('');
 
     const POPULATION = 25700000;
@@ -827,6 +1231,95 @@
     if (lastEditedField) convertFrom(lastEditedField);
   }
 
+  // ── SUPPLY DATA ──
+  // Known constants
+  const HALVING_INTERVAL = 210000; // blocks
+  const GENESIS_TIMESTAMP = 1231006505000; // ms
+  const AVG_BLOCK_MS = 10 * 60 * 1000; // 10 min in ms
+
+  // Epoch subsidies (BTC per block)
+  const EPOCH_SUBSIDIES = [50, 25, 12.5, 6.25, 3.125, 1.5625, 0.78125, 0.390625, 0.1953125, 0.09765625];
+
+  function epochFromHeight(height) {
+    return Math.floor(height / HALVING_INTERVAL);
+  }
+
+  function subsidyForEpoch(epoch) {
+    if (epoch >= EPOCH_SUBSIDIES.length) return 0;
+    return EPOCH_SUBSIDIES[epoch];
+  }
+
+  // Approximate mined supply from block height
+  function minedSupply(height) {
+    let total = 0;
+    for (let e = 0; e <= epochFromHeight(height); e++) {
+      const subsidy = subsidyForEpoch(e);
+      const epochStart = e * HALVING_INTERVAL;
+      const epochEnd = Math.min((e + 1) * HALVING_INTERVAL, height + 1);
+      total += subsidy * (epochEnd - epochStart);
+    }
+    return total;
+  }
+
+  function renderSupply(height) {
+    const epoch = epochFromHeight(height);
+    const subsidy = subsidyForEpoch(epoch);
+    const nextSubsidy = subsidyForEpoch(epoch + 1);
+    const mined = minedSupply(height);
+    const remaining = 21000000 - mined;
+    const pct = (mined / 21000000) * 100;
+    const blocksToHalving = HALVING_INTERVAL - (height % HALVING_INTERVAL);
+    const msToHalving = blocksToHalving * AVG_BLOCK_MS;
+    const halvingDate = new Date(Date.now() + msToHalving);
+    const halvingDateStr = halvingDate.toLocaleDateString('en-AU', { month: 'short', year: 'numeric' });
+
+    document.getElementById('supply-bar').style.width = pct.toFixed(4) + '%';
+    document.getElementById('supply-pct').textContent = pct.toFixed(4) + '% mined so far';
+    document.getElementById('sc-mined').textContent = mined.toLocaleString('en-AU', { maximumFractionDigits: 2 });
+    document.getElementById('sc-remaining').textContent = remaining.toLocaleString('en-AU', { maximumFractionDigits: 2 });
+    document.getElementById('sc-pct').textContent = pct.toFixed(4) + '%';
+    document.getElementById('sc-height').textContent = height.toLocaleString('en-AU');
+    document.getElementById('sc-subsidy').textContent = subsidy + ' BTC';
+    document.getElementById('sc-epoch').textContent = (epoch + 1) + ' of 33';
+    document.getElementById('sc-blocks-to-halving').textContent = blocksToHalving.toLocaleString('en-AU');
+    document.getElementById('sc-halving-date').textContent = 'est. ' + halvingDateStr;
+    document.getElementById('sc-next-subsidy').textContent = nextSubsidy + ' BTC';
+  }
+
+  async function fetchSupply() {
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 200,
+          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+          system: 'You are a blockchain data assistant. Respond with ONLY a valid raw JSON object — no markdown, no explanation. Format: {"block_height": <integer>}',
+          messages: [{ role: 'user', content: 'What is the current mainnet BTC block height? Return ONLY raw JSON: {"block_height": <integer>}' }]
+        })
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      const textBlock = data.content && data.content.filter(b => b.type === 'text').pop();
+      if (!textBlock) throw new Error('No text block');
+      const clean = textBlock.text.replace(/```[\w]*|```/g, '').trim();
+      const parsed = JSON.parse(clean);
+      if (typeof parsed.block_height !== 'number') throw new Error('Missing block_height');
+      renderSupply(Math.round(parsed.block_height));
+    } catch (err) {
+      console.error('Supply fetch failed:', err);
+      // Fall back to a time-based estimate
+      const estimatedHeight = Math.floor((Date.now() - GENESIS_TIMESTAMP) / AVG_BLOCK_MS);
+      renderSupply(estimatedHeight);
+      document.getElementById('sc-height').textContent = '~' + estimatedHeight.toLocaleString('en-AU') + ' (est.)';
+    }
+  }
+
+  fetchSupply();
+  // Refresh every 10 minutes — blocks come ~every 10 min
+  setInterval(fetchSupply, 600000);
+
   fetchBtcPrice();
   setInterval(fetchBtcPrice, 60000);
 
@@ -838,25 +1331,14 @@
     const audInput  = document.getElementById('input-aud');
     const inputs = { btc: btcInput, sats: satsInput, aud: audInput };
     const raw = inputs[source].value.trim();
-
-    if (raw === '') {
-      for (const key in inputs) if (key !== source) inputs[key].value = '';
-      return;
-    }
-
+    if (raw === '') { for (const key in inputs) if (key !== source) inputs[key].value = ''; return; }
     const num = parseFloat(raw);
     if (isNaN(num) || num < 0) return;
-
-    if (!btcAudPrice) {
-      document.getElementById('btc-rate-sub').textContent = 'Fetching live BTC price…';
-      return;
-    }
-
+    if (!btcAudPrice) { document.getElementById('btc-rate-sub').textContent = 'Fetching live price…'; return; }
     let btc;
     if (source === 'btc') btc = num;
     else if (source === 'sats') btc = num / 1e8;
     else btc = num / btcAudPrice;
-
     if (source !== 'btc')  btcInput.value  = btc.toFixed(8);
     if (source !== 'sats') satsInput.value = Math.round(btc * 1e8);
     if (source !== 'aud')  audInput.value  = (btc * btcAudPrice).toFixed(2);
