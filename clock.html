@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Australia Debt Clock — Digital Playhouse Foundation</title>
-<link rel="icon" type="image/png" href="https://dphfoundation.github.io/favicon.png">
-<link rel="icon" type="image/x-icon" href="https://dphfoundation.github.io/favicon.ico">
-<link rel="apple-touch-icon" href="https://dphfoundation.github.io/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -53,19 +52,10 @@
     gap: 12px;
     text-decoration: none;
   }
-  .logo-mark {
-    width: 34px;
-    height: 34px;
-    border: 1.5px solid var(--orange);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--orange);
-    letter-spacing: -0.05em;
-    font-weight: 700;
+  .logo-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
   }
   .logo-text {
     font-family: 'Space Mono', monospace;
@@ -753,7 +743,7 @@
 
 <header>
   <a href="https://dphfoundation.github.io" target="_blank" class="logo">
-    <div class="logo-mark">DPF</div>
+    <img src="favicon.png" class="logo-img" alt="Digital Playhouse Foundation Logo">
     <div class="logo-text">
       Digital Playhouse
       <em>Foundation</em>
@@ -1174,40 +1164,15 @@
   async function fetchBtcPrice() {
     document.getElementById('btc-rate-sub').textContent = 'Fetching live price…';
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 1000,
-          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-          tool_choice: { type: 'auto' },
-          system: 'You are a cryptocurrency price assistant. Use web search to find the current BTC price, then reply with ONLY a raw JSON object — absolutely no markdown, no backticks, no explanation. Format: {"price_aud": <number>, "price_usd": <number>, "change_24h": <number>}',
-          messages: [{ role: 'user', content: 'Search for the current BTC/AUD price and 24h change right now, then return ONLY this JSON (no other text): {"price_aud": <number>, "price_usd": <number>, "change_24h": <number>}' }]
-        })
-      });
-      if (!res.ok) {
-        const errBody = await res.text();
-        throw new Error('HTTP ' + res.status + ': ' + errBody.slice(0, 200));
-      }
+      const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=aud&include_24hr_change=true');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      console.log('BTC API response blocks:', data.content?.map(b => b.type));
-      // Find the final text block — it comes after tool_use/tool_result blocks
-      const textBlocks = data.content && data.content.filter(b => b.type === 'text');
-      if (!textBlocks || textBlocks.length === 0) throw new Error('No text block — got: ' + JSON.stringify(data.content?.map(b=>b.type)));
-      const raw = textBlocks[textBlocks.length - 1].text;
-      console.log('Raw text block:', raw);
-      // Strip any accidental markdown fences
-      const clean = raw.replace(/```[\w]*/g, '').replace(/```/g, '').trim();
-      // Extract just the JSON object in case there's surrounding text
-      const jsonMatch = clean.match(/\{[^}]+\}/);
-      if (!jsonMatch) throw new Error('No JSON object found in: ' + clean.slice(0, 200));
-      const parsed = JSON.parse(jsonMatch[0]);
-      if (typeof parsed.price_aud !== 'number') throw new Error('Missing price_aud in: ' + jsonMatch[0]);
-      if (typeof parsed.price_usd === 'number' && parsed.price_aud > 0) {
-        fxUsdAud = parsed.price_usd / parsed.price_aud;
+      if (!data.bitcoin || typeof data.bitcoin.aud !== 'number') {
+        throw new Error('Invalid response from CoinGecko');
       }
-      applyBtcPrice(parsed.price_aud, parsed.change_24h ?? 0, 'web search');
+      const priceAud = data.bitcoin.aud;
+      const change24h = data.bitcoin.aud_24h_change || 0;
+      applyBtcPrice(priceAud, change24h, 'CoinGecko');
     } catch (err) {
       console.error('Price fetch failed:', err.message);
       document.getElementById('btc-rate-sub').textContent = 'Price fetch failed: ' + err.message.slice(0, 80);
@@ -1309,25 +1274,12 @@
 
   async function fetchSupply() {
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 200,
-          tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-          system: 'You are a blockchain data assistant. Respond with ONLY a valid raw JSON object — no markdown, no explanation. Format: {"block_height": <integer>}',
-          messages: [{ role: 'user', content: 'What is the current mainnet BTC block height? Return ONLY raw JSON: {"block_height": <integer>}' }]
-        })
-      });
+      const res = await fetch('https://blockchain.info/q/getblockcount');
       if (!res.ok) throw new Error('HTTP ' + res.status);
-      const data = await res.json();
-      const textBlock = data.content && data.content.filter(b => b.type === 'text').pop();
-      if (!textBlock) throw new Error('No text block');
-      const clean = textBlock.text.replace(/```[\w]*|```/g, '').trim();
-      const parsed = JSON.parse(clean);
-      if (typeof parsed.block_height !== 'number') throw new Error('Missing block_height');
-      renderSupply(Math.round(parsed.block_height));
+      const heightStr = await res.text();
+      const height = parseInt(heightStr.trim());
+      if (isNaN(height)) throw new Error('Invalid block height');
+      renderSupply(height);
     } catch (err) {
       console.error('Supply fetch failed:', err);
       // Fall back to a time-based estimate
