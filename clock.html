@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Australia Debt Clock — Digital Playhouse Foundation</title>
+<link rel="icon" type="image/png" href="https://dphfoundation.github.io/favicon.png">
+<link rel="icon" type="image/x-icon" href="https://dphfoundation.github.io/favicon.ico">
+<link rel="apple-touch-icon" href="https://dphfoundation.github.io/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -353,12 +356,15 @@
     font-size: 0.78rem;
     color: var(--red);
   }
-  @media (max-width: 900px) {
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .stat-card:nth-child(4n) { border-right: 1px solid var(--border); }
+  @media (max-width: 860px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    /* reset 4-col border rules, apply 2-col rules */
+    .stat-card { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .stat-card:nth-child(2n) { border-right: none; }
-    .stat-card:nth-child(n+5) { border-bottom: 1px solid var(--border); }
-    .stat-card:nth-child(n+7) { border-bottom: none; }
+    .stat-card:last-child,
+    .stat-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
   }
 
   /* ── SECTION DIVIDER ── */
@@ -562,8 +568,11 @@
   @media (max-width: 768px) {
     .btc-grid { grid-template-columns: 1fr; }
     header { padding: 14px 20px; }
-    .debt-hero, .stats-section, .btc-section, .payback-section { padding-left: 20px; padding-right: 20px; }
+    .debt-hero, .stats-section, .btc-section, .payback-section, .supply-section { padding-left: 20px; padding-right: 20px; }
     .section-divider { margin: 0 20px; }
+    .halving-row { flex-direction: column; }
+    .halving-cell { border-right: none; border-bottom: 1px solid var(--border); }
+    .halving-cell:last-child { border-bottom: none; }
   }
 
   .btc-card {
@@ -1169,27 +1178,39 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 300,
+          model: 'claude-sonnet-4-6',
+          max_tokens: 1000,
           tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-          system: 'You are a price lookup assistant. Always respond with ONLY a valid JSON object — no markdown, no explanation, no code fences. Format: {"price_aud": <number>, "price_usd": <number>, "change_24h": <number>}',
-          messages: [{ role: 'user', content: 'What is the current BTC price in Australian dollars (AUD) and US dollars (USD), and the 24-hour percentage change? Return ONLY a raw JSON object: {"price_aud": <number>, "price_usd": <number>, "change_24h": <number>}' }]
+          tool_choice: { type: 'auto' },
+          system: 'You are a cryptocurrency price assistant. Use web search to find the current BTC price, then reply with ONLY a raw JSON object — absolutely no markdown, no backticks, no explanation. Format: {"price_aud": <number>, "price_usd": <number>, "change_24h": <number>}',
+          messages: [{ role: 'user', content: 'Search for the current BTC/AUD price and 24h change right now, then return ONLY this JSON (no other text): {"price_aud": <number>, "price_usd": <number>, "change_24h": <number>}' }]
         })
       });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      if (!res.ok) {
+        const errBody = await res.text();
+        throw new Error('HTTP ' + res.status + ': ' + errBody.slice(0, 200));
+      }
       const data = await res.json();
-      const textBlock = data.content && data.content.filter(b => b.type === 'text').pop();
-      if (!textBlock) throw new Error('No text block in response');
-      const clean = textBlock.text.replace(/```[\w]*|```/g, '').trim();
-      const parsed = JSON.parse(clean);
-      if (typeof parsed.price_aud !== 'number') throw new Error('Missing price_aud');
+      console.log('BTC API response blocks:', data.content?.map(b => b.type));
+      // Find the final text block — it comes after tool_use/tool_result blocks
+      const textBlocks = data.content && data.content.filter(b => b.type === 'text');
+      if (!textBlocks || textBlocks.length === 0) throw new Error('No text block — got: ' + JSON.stringify(data.content?.map(b=>b.type)));
+      const raw = textBlocks[textBlocks.length - 1].text;
+      console.log('Raw text block:', raw);
+      // Strip any accidental markdown fences
+      const clean = raw.replace(/```[\w]*/g, '').replace(/```/g, '').trim();
+      // Extract just the JSON object in case there's surrounding text
+      const jsonMatch = clean.match(/\{[^}]+\}/);
+      if (!jsonMatch) throw new Error('No JSON object found in: ' + clean.slice(0, 200));
+      const parsed = JSON.parse(jsonMatch[0]);
+      if (typeof parsed.price_aud !== 'number') throw new Error('Missing price_aud in: ' + jsonMatch[0]);
       if (typeof parsed.price_usd === 'number' && parsed.price_aud > 0) {
         fxUsdAud = parsed.price_usd / parsed.price_aud;
       }
       applyBtcPrice(parsed.price_aud, parsed.change_24h ?? 0, 'web search');
     } catch (err) {
-      console.error('Price fetch failed:', err);
-      if (!btcAudPrice) document.getElementById('btc-rate-sub').textContent = 'Price fetch failed — retrying…';
+      console.error('Price fetch failed:', err.message);
+      document.getElementById('btc-rate-sub').textContent = 'Price fetch failed: ' + err.message.slice(0, 80);
     }
   }
 
@@ -1292,7 +1313,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model: 'claude-sonnet-4-6',
           max_tokens: 200,
           tools: [{ type: 'web_search_20250305', name: 'web_search' }],
           system: 'You are a blockchain data assistant. Respond with ONLY a valid raw JSON object — no markdown, no explanation. Format: {"block_height": <integer>}',
@@ -1316,12 +1337,14 @@
     }
   }
 
-  fetchSupply();
-  // Refresh every 10 minutes — blocks come ~every 10 min
-  setInterval(fetchSupply, 600000);
-
+  // Stagger fetches — both hit the same API, fire together = 429
   fetchBtcPrice();
   setInterval(fetchBtcPrice, 60000);
+
+  setTimeout(() => {
+    fetchSupply();
+    setInterval(fetchSupply, 600000);
+  }, 8000); // wait 8s for BTC price fetch to complete first
 
   // ── CONVERTER ──
   function convertFrom(source) {
