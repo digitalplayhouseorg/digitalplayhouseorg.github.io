@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Learner to Practitioner · OLP + CREDU Whitepaper · Digital Playhouse Foundation</title>
+<meta name="description" content="Combining the Open Learning Protocol and CREDU into one sovereign learning and credentialing stack. A Digital Playhouse Foundation whitepaper.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F1F4EE;          /* pale ledger green-grey */
+  --paper-deep:#E6EBE2;     /* ruled band */
+  --ink:#1B2620;            /* deep green-black ink */
+  --ink-soft:#4A5A50;       /* secondary text */
+  --rule:#B9C9B6;           /* ledger rule green */
+  --anchor:#DF7A12;         /* Bitcoin anchor orange — verification only */
+  --anchor-ink:#8C4A05;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --serif:'IBM Plex Serif',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:1.0625rem;
+  line-height:1.65;
+  /* faint ledger ruling */
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,rgba(185,201,182,.28) 31px,rgba(185,201,182,.28) 32px);
+}
+a{color:var(--ink);text-decoration-color:var(--rule);text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{text-decoration-color:var(--anchor)}
+:focus-visible{outline:2px solid var(--anchor);outline-offset:3px}
+
+/* ---- masthead ---- */
+header.masthead{
+  border-bottom:3px double var(--ink);
+  background:var(--paper);
+}
+.masthead-inner{
+  max-width:1060px;margin:0 auto;padding:1rem 1.5rem;
+  display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);
+}
+.masthead-inner strong{color:var(--ink);font-weight:600}
+
+/* ---- hero ---- */
+.hero{
+  max-width:1060px;margin:0 auto;padding:4.5rem 1.5rem 3.5rem;
+}
+.hero .eyebrow{
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+  display:flex;gap:.75rem;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;
+}
+.hero .eyebrow::before{content:"";display:inline-block;width:2.5rem;height:1px;background:var(--ink)}
+h1{
+  font-size:clamp(2.3rem,5.5vw,4rem);
+  font-weight:600;line-height:1.08;letter-spacing:-.015em;max-width:18ch;
+}
+.hero .sub{
+  margin-top:1.4rem;max-width:56ch;font-size:1.2rem;color:var(--ink-soft);font-style:italic;
+}
+.doc-hash{
+  margin-top:2.6rem;border:1px solid var(--rule);background:var(--paper-deep);
+  padding:.85rem 1.1rem;max-width:640px;
+  font-family:var(--mono);font-size:.78rem;color:var(--ink-soft);
+  display:flex;flex-direction:column;gap:.3rem;
+}
+.doc-hash .label{letter-spacing:.1em;text-transform:uppercase;font-size:.68rem}
+.doc-hash .digest{color:var(--anchor-ink);word-break:break-all;font-weight:500}
+.doc-hash .note{font-size:.7rem}
+
+/* ---- layout: margin rail + column ---- */
+main{max-width:1060px;margin:0 auto;padding:0 1.5rem 5rem}
+section.entry{
+  display:grid;grid-template-columns:180px 1fr;gap:2.5rem;
+  border-top:1px solid var(--ink);
+  padding:2.4rem 0 3rem;
+}
+.rail{
+  font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);
+  display:flex;flex-direction:column;gap:.55rem;
+}
+.rail .folio{font-size:1.5rem;color:var(--ink);font-weight:600;line-height:1}
+.rail .sec-hash{word-break:break-all;color:var(--anchor-ink);line-height:1.5}
+.rail .sec-hash::before{content:"sha-256 ";color:var(--ink-soft)}
+.body h2{
+  font-size:clamp(1.5rem,3vw,2rem);font-weight:600;letter-spacing:-.01em;margin-bottom:1.1rem;max-width:30ch;
+}
+.body p{max-width:68ch;margin-bottom:1.1rem}
+.body p:last-child{margin-bottom:0}
+.body strong{font-weight:600}
+.body ol,.body ul{max-width:66ch;margin:0 0 1.1rem 1.3rem}
+.body li{margin-bottom:.55rem}
+.body li::marker{font-family:var(--mono);font-size:.85em;color:var(--ink-soft)}
+
+/* ---- ledger table ---- */
+table{
+  width:100%;border-collapse:collapse;margin:1.4rem 0;
+  font-size:.92rem;background:var(--paper);
+  border:1px solid var(--ink);
+}
+th{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  text-align:left;padding:.6rem .8rem;border-bottom:2px solid var(--ink);
+  background:var(--paper-deep);font-weight:600;
+}
+td{padding:.6rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:600;white-space:nowrap}
+code{font-family:var(--mono);font-size:.85em;background:var(--paper-deep);padding:.08em .35em;border:1px solid var(--rule)}
+
+/* ---- exhibits (diagrams) ---- */
+figure.exhibit{
+  margin:1.8rem 0;border:1px solid var(--ink);background:#F7F9F4;
+}
+figure.exhibit figcaption{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.55rem .9rem;border-bottom:1px solid var(--rule);color:var(--ink-soft);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+}
+figure.exhibit figcaption b{color:var(--ink);font-weight:600}
+.diagram{padding:1.2rem .9rem;overflow-x:auto}
+.diagram svg{display:block;width:100%;height:auto;max-width:920px;margin:0 auto;min-width:560px}
+@media(max-width:640px){.diagram svg{min-width:520px}}
+
+/* ---- pull quote / canonical frame ---- */
+.canonical{
+  border-left:4px solid var(--anchor);background:var(--paper-deep);
+  padding:1.3rem 1.5rem;margin:1.6rem 0;max-width:62ch;
+}
+.canonical p{font-style:italic;font-size:1.15rem;margin-bottom:0;line-height:1.5}
+
+/* ---- anchor-accented inline verify chips ---- */
+.chip{
+  font-family:var(--mono);font-size:.72rem;border:1px solid var(--anchor);color:var(--anchor-ink);
+  padding:.1em .5em;white-space:nowrap;
+}
+
+/* ---- footer ---- */
+footer{
+  border-top:3px double var(--ink);background:var(--paper-deep);
+}
+.footer-inner{
+  max-width:1060px;margin:0 auto;padding:2rem 1.5rem;
+  font-family:var(--mono);font-size:.75rem;color:var(--ink-soft);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+}
+.footer-inner a{color:var(--ink)}
+
+@media(max-width:760px){
+  section.entry{grid-template-columns:1fr;gap:1rem;padding-top:1.8rem}
+  .rail{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:1rem}
+  .rail .sec-hash{flex-basis:100%}
+}
+@media print{
+  body{background:none;font-size:11pt}
+  .doc-hash{border:1px solid #999}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <span><strong>Digital Playhouse Foundation</strong> · Whitepaper</span>
+    <span>Draft v0.1 · July 2026</span>
+    <span>CREDU + Open Learning Protocol</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">Global public good infrastructure · Profession owned</div>
+  <h1>From Learner to&nbsp;Practitioner</h1>
+  <p class="sub">Combining the Open Learning Protocol and CREDU into one sovereign learning and credentialing stack.</p>
+  <div class="doc-hash" id="docHashBox">
+    <span class="label">SHA-256 of this document</span>
+    <span class="digest" id="docHash">computing in your browser…</span>
+    <span class="note">Computed client-side from this page's text each time it loads, the same primitive CREDU anchors to Bitcoin. Change one character and the digest changes.</span>
+  </div>
+</div>
+
+<main>
+
+<section class="entry" data-sec="00">
+  <div class="rail"><span class="folio">00</span><span>Abstract</span><span class="sec-hash"></span></div>
+  <div class="body">
+    <h2>Abstract</h2>
+    <p>The Open Learning Protocol (OLP) is a decentralised learning protocol: every participant holds a Nostr keypair identity, every learner keeps a Git repository as an immutable, verifiable learning record, payments run on the Bitcoin Lightning Network, and governance runs through School Improvement Proposals and a multi-signature Council. CREDU is a practitioner-sovereign credentialing protocol: a federated registry of professional graphs hosted on infrastructure practitioners own, with evidence anchored to Bitcoin and records readable by AI agents with no vendor in the verification path.</p>
+    <p>This paper specifies how the two combine into a single stack. OLP is the substrate: identity, records, payments and governance. CREDU is the credentialing layer built on that substrate. Together they form a continuous pipeline from first learning artefact to publicly trusted, agent-procurable professional standing, delivered as free and open-source public-good infrastructure with no central operator who can de-list, gate or extract.</p>
+  </div>
+</section>
+
+<section class="entry" data-sec="01">
+  <div class="rail"><span class="folio">01</span><span>The problem</span><span class="sec-hash"></span></div>
+  <div class="body">
+    <h2>The problem</h2>
+    <p>Learning records and professional credentials are held apart, on platforms neither the learner nor the practitioner owns. A learner's evidence of work lives inside an institution's LMS and evaporates on exit. A practitioner's credentials live inside professional-body databases and vendor platforms that can gate, charge or withdraw access. Neither record is readable by the AI agents that will increasingly find, verify and procure professional work.</p>
+    <p>The result is a broken pipeline: the years of verifiable effort a person accumulates while learning do not carry forward into the record that makes them procurable as a professional. Each stage starts from zero, on someone else's infrastructure.</p>
+  </div>
+</section>
+
+<section class="entry" data-sec="02">
+  <div class="rail"><span class="folio">02</span><span>One substrate, two layers</span><span class="sec-hash"></span></div>
+  <div class="body">
+    <h2>The design answer: one substrate, two layers</h2>
+    <p>OLP and CREDU were designed on the same four commitments, which is what makes them composable:</p>
+    <ol>
+      <li><strong>Sovereignty:</strong> the record lives on infrastructure the participant owns, from the first learning commit to the last professional attestation.</li>
+      <li><strong>Bitcoin as the trust root:</strong> evidence is anchored to Bitcoin via OpenTimestamps for tamper-evidence; Lightning carries payments. No other chain, no vendor anchor.</li>
+      <li><strong>No vendor in the verification path:</strong> anyone can verify any record using only public infrastructure.</li>
+      <li><strong>Agents as first-class readers:</strong> records are structured for machine reading first; humans receive a rendered view of the same data.</li>
+    </ol>
+    <table>
+      <thead><tr><th>Layer</th><th>Protocol</th><th>Function</th></tr></thead>
+      <tbody>
+        <tr><td>Credentialing</td><td>CREDU</td><td>Professional graphs, federated registry, peer-attested CPD, agentic procurement</td></tr>
+        <tr><td>Learning</td><td>OLP</td><td>Learning records, programs, self-managed calendars, tuition flows</td></tr>
+        <tr><td>Substrate (shared)</td><td>Nostr, Git/GitHub, Lightning, Bitcoin + OpenTimestamps</td><td>Identity and discovery, records and hosting, payments, evidence anchoring</td></tr>
+      </tbody>
+    </table>
+    <figure class="exhibit">
+      <figcaption><span><b>Exhibit A</b> · The combined stack</span><span>CREDU over OLP over shared substrate</span></figcaption>
+      <div class="diagram"><svg viewBox="0 0 760 470" role="img" aria-label="Stack diagram: CREDU credentialing layer on top of the Open Learning Protocol learning layer on top of the shared substrate of Nostr, Git, Lightning and Bitcoin" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Mono',monospace">
+        <defs><marker id="arrA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1B2620"/></marker></defs>
+        <!-- CREDU layer -->
+        <rect x="8" y="8" width="744" height="136" fill="#F1F4EE" stroke="#B9C9B6"/>
+        <text x="20" y="30" font-size="12" font-weight="600" fill="#1B2620">CREDU · credentialing layer</text>
+        <g>
+          <rect x="20" y="48" width="172" height="82" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="106" y="82" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Federation registry</text>
+          <text x="106" y="100" font-size="10.5" fill="#4A5A50" text-anchor="middle">nodes.json</text>
+          <rect x="202" y="48" width="172" height="82" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="288" y="82" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Professional graphs</text>
+          <text x="288" y="100" font-size="10.5" fill="#4A5A50" text-anchor="middle">credu.* URLs</text>
+          <rect x="384" y="48" width="172" height="82" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="470" y="82" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Peer-attested CPD</text>
+          <text x="470" y="100" font-size="10.5" fill="#4A5A50" text-anchor="middle">cross-references</text>
+          <rect x="566" y="48" width="172" height="82" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="652" y="82" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">AI-discoverability</text>
+          <text x="652" y="100" font-size="10.5" fill="#4A5A50" text-anchor="middle">llms.txt + kind:30078</text>
+        </g>
+        <line x1="380" y1="146" x2="380" y2="162" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrA)"/>
+        <!-- OLP layer -->
+        <rect x="8" y="166" width="744" height="136" fill="#F1F4EE" stroke="#B9C9B6"/>
+        <text x="20" y="188" font-size="12" font-weight="600" fill="#1B2620">Open Learning Protocol · learning layer</text>
+        <g>
+          <rect x="20" y="206" width="172" height="82" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="106" y="240" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Governance</text>
+          <text x="106" y="258" font-size="10.5" fill="#4A5A50" text-anchor="middle">Council · SIPs · multisig</text>
+          <rect x="202" y="206" width="172" height="82" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="288" y="240" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Git learning</text>
+          <text x="288" y="258" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">portfolios</text>
+          <rect x="384" y="206" width="172" height="82" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="470" y="240" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Didactic programs</text>
+          <text x="470" y="258" font-size="10.5" fill="#4A5A50" text-anchor="middle">+ calendars</text>
+          <rect x="566" y="206" width="172" height="82" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="652" y="240" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Lightning</text>
+          <text x="652" y="258" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">tuition flows</text>
+        </g>
+        <line x1="380" y1="304" x2="380" y2="320" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrA)"/>
+        <!-- Substrate layer -->
+        <rect x="8" y="324" width="744" height="136" fill="#F1F4EE" stroke="#B9C9B6"/>
+        <text x="20" y="346" font-size="12" font-weight="600" fill="#1B2620">Shared substrate</text>
+        <g>
+          <rect x="20" y="364" width="172" height="82" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="106" y="398" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Nostr</text>
+          <text x="106" y="416" font-size="10.5" fill="#4A5A50" text-anchor="middle">identity + discovery</text>
+          <rect x="202" y="364" width="172" height="82" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="288" y="398" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Git / GitHub</text>
+          <text x="288" y="416" font-size="10.5" fill="#4A5A50" text-anchor="middle">records + hosting</text>
+          <rect x="384" y="364" width="172" height="82" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="470" y="398" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Lightning Network</text>
+          <text x="470" y="416" font-size="10.5" fill="#4A5A50" text-anchor="middle">payments</text>
+          <rect x="566" y="364" width="172" height="82" fill="#F7F2E9" stroke="#DF7A12" stroke-width="1.5"/>
+          <text x="652" y="390" font-size="11.5" font-weight="600" fill="#8C4A05" text-anchor="middle">Bitcoin +</text>
+          <text x="652" y="406" font-size="11.5" font-weight="600" fill="#8C4A05" text-anchor="middle">OpenTimestamps</text>
+          <text x="652" y="424" font-size="10.5" fill="#8C4A05" text-anchor="middle">evidence anchoring</text>
+        </g>
+      </svg></div>
+    </figure>
+  </div>
+</section>
+
+<section class="entry" data-sec="03">
+  <div class="rail"><span class="folio">03</span><span>Shared primitives</span><span class="sec-hash"></span></div>
+  <div class="body">
+    <h2>Shared primitives</h2>
+    <p>The combination is not an integration project between two systems; it is one architecture expressed at two stages of a person's development. Four primitives are shared end to end.</p>
+    <p><strong>Identity: one Nostr keypair for life.</strong> The keypair a learner receives on joining an OLP cohort is the same identity that later signs their CREDU node's discovery event (<code>kind:30078</code>). Reputation accrues to one key across the whole journey. NIP-05 gives it a human-readable handle; no platform account is ever the identity.</p>
+    <p><strong>Records: the Git repository that grows up.</strong> The OLP learning portfolio and the CREDU professional graph are the same object at different maturities. The learner's repository holds project work, reflections and program completions under version control. When the learner qualifies, the repository is restructured against the CREDU schema (a <code>credu.json</code> manifest plus credentials, CPD, publications and attestations records), deployed to a <code>credu.*</code> URL, and entered into the federation registry. Nothing is migrated off anyone's platform, because it was never on one.</p>
+    <p><strong>Anchoring: the same proof for homework and for licences.</strong> Evidence files in both layers are hashed with <span class="chip">SHA-256</span> and anchored to Bitcoin through OpenTimestamps using <code>credu-cli</code>. A learning artefact anchored in week one of a cohort is verifiable by the same block-explorer query as a professional CPD record anchored a decade later.</p>
+    <p><strong>Payments: Lightning from tuition to CPD delivery.</strong> OLP carries tuition, allocation and timelocked funds on Lightning. CREDU carries payment for CPD delivery on the same rail: attendees pay the deliverer, and no money ever flows for attestation, keeping the reputational incentive clean.</p>
+    <figure class="exhibit">
+      <figcaption><span><b>Exhibit B</b> · The peer-attested CPD cross-reference</span><span>Reputation flows both ways · money flows one way</span></figcaption>
+      <div class="diagram"><svg viewBox="0 0 760 310" role="img" aria-label="Peer-attested CPD cross-reference: a session record on the deliverer's graph and a CPD entry on the attendee's graph link to each other; Lightning payment flows only from attendee to deliverer; both records anchor to Bitcoin" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Mono',monospace">
+        <defs>
+          <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1B2620"/></marker>
+          <marker id="arrBo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#DF7A12"/></marker>
+        </defs>
+        <!-- Deliverer -->
+        <rect x="40" y="50" width="270" height="96" fill="#E6EBE2" stroke="#1B2620"/>
+        <text x="175" y="76" font-size="10" letter-spacing="1.5" fill="#4A5A50" text-anchor="middle">DELIVERER'S GRAPH</text>
+        <text x="175" y="100" font-size="13" font-weight="600" fill="#1B2620" text-anchor="middle">Session record</text>
+        <text x="175" y="120" font-size="10.5" fill="#4A5A50" text-anchor="middle">evidence hashed + anchored</text>
+        <!-- Attendee -->
+        <rect x="450" y="50" width="270" height="96" fill="#E6EBE2" stroke="#1B2620"/>
+        <text x="585" y="76" font-size="10" letter-spacing="1.5" fill="#4A5A50" text-anchor="middle">ATTENDEE'S GRAPH</text>
+        <text x="585" y="100" font-size="13" font-weight="600" fill="#1B2620" text-anchor="middle">CPD entry</text>
+        <text x="585" y="120" font-size="10.5" fill="#4A5A50" text-anchor="middle">evidence hashed + anchored</text>
+        <!-- Cross-reference (both ways) -->
+        <text x="380" y="60" font-size="11" font-weight="600" fill="#1B2620" text-anchor="middle">cross-reference</text>
+        <text x="380" y="74" font-size="10" fill="#4A5A50" text-anchor="middle">reputation flows both ways</text>
+        <line x1="316" y1="86" x2="444" y2="86" stroke="#1B2620" stroke-width="1.5" marker-start="url(#arrB)" marker-end="url(#arrB)"/>
+        <!-- Payment (one way) -->
+        <line x1="450" y1="120" x2="316" y2="120" stroke="#DF7A12" stroke-width="1.5" marker-end="url(#arrBo)"/>
+        <text x="380" y="142" font-size="11" font-weight="600" fill="#8C4A05" text-anchor="middle">Lightning payment</text>
+        <text x="380" y="156" font-size="10" fill="#8C4A05" text-anchor="middle">for delivery only · never for attestation</text>
+        <!-- Anchors -->
+        <line x1="175" y1="146" x2="175" y2="216" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrB)"/>
+        <line x1="585" y1="146" x2="585" y2="216" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrB)"/>
+        <rect x="85" y="220" width="180" height="50" fill="#F7F2E9" stroke="#DF7A12" stroke-width="1.5"/>
+        <text x="175" y="250" font-size="12" font-weight="600" fill="#8C4A05" text-anchor="middle">Bitcoin anchor</text>
+        <rect x="495" y="220" width="180" height="50" fill="#F7F2E9" stroke="#DF7A12" stroke-width="1.5"/>
+        <text x="585" y="250" font-size="12" font-weight="600" fill="#8C4A05" text-anchor="middle">Bitcoin anchor</text>
+      </svg></div>
+    </figure>
+  </div>
+</section>
+
+<section class="entry" data-sec="04">
+  <div class="rail"><span class="folio">04</span><span>The pipeline</span><span class="sec-hash"></span></div>
+  <div class="body">
+    <h2>The learner-to-practitioner pipeline</h2>
+    <p>The combined stack produces a pipeline with no re-registration, no data export and no trust reset at any stage.</p>
+    <figure class="exhibit">
+      <figcaption><span><b>Exhibit C</b> · Six stages, one keypair, one repository</span><span>OLP stages 1–3 · CREDU stages 4–6</span></figcaption>
+      <div class="diagram"><svg viewBox="0 0 910 230" role="img" aria-label="Six-stage pipeline: Join, Learn and Attest inside the Open Learning Protocol, then Qualify, Practise and Accumulate inside CREDU" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Mono',monospace">
+        <defs><marker id="arrC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1B2620"/></marker></defs>
+        <!-- Group frames -->
+        <rect x="12" y="36" width="442" height="170" fill="#F1F4EE" stroke="#B9C9B6"/>
+        <text x="22" y="58" font-size="11" font-weight="600" fill="#1B2620">Open Learning Protocol</text>
+        <rect x="456" y="36" width="442" height="170" fill="#F1F4EE" stroke="#B9C9B6"/>
+        <text x="466" y="58" font-size="11" font-weight="600" fill="#1B2620">CREDU</text>
+        <!-- Stage boxes -->
+        <g>
+          <rect x="26" y="84" width="126" height="96" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="89" y="112" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">1 · Join</text>
+          <text x="89" y="132" font-size="9.5" fill="#4A5A50" text-anchor="middle">Nostr keypair</text>
+          <text x="89" y="147" font-size="9.5" fill="#4A5A50" text-anchor="middle">fork portfolio</text>
+          <rect x="174" y="84" width="126" height="96" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="237" y="112" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">2 · Learn</text>
+          <text x="237" y="132" font-size="9.5" fill="#4A5A50" text-anchor="middle">commit + anchor</text>
+          <text x="237" y="147" font-size="9.5" fill="#4A5A50" text-anchor="middle">work and evidence</text>
+          <rect x="322" y="84" width="126" height="96" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="385" y="112" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">3 · Attest</text>
+          <text x="385" y="132" font-size="9.5" fill="#4A5A50" text-anchor="middle">peer CPD</text>
+          <text x="385" y="147" font-size="9.5" fill="#4A5A50" text-anchor="middle">cross-references</text>
+          <rect x="470" y="84" width="126" height="96" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="533" y="112" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">4 · Qualify</text>
+          <text x="533" y="132" font-size="9.5" fill="#4A5A50" text-anchor="middle">PR to nodes.json</text>
+          <text x="533" y="147" font-size="9.5" fill="#4A5A50" text-anchor="middle">tiered verification</text>
+          <rect x="618" y="84" width="126" height="96" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="681" y="112" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">5 · Practise</text>
+          <text x="681" y="132" font-size="9.5" fill="#4A5A50" text-anchor="middle">graph at credu.*</text>
+          <text x="681" y="147" font-size="9.5" fill="#4A5A50" text-anchor="middle">agent-procurable</text>
+          <rect x="766" y="84" width="126" height="96" fill="#E6EBE2" stroke="#1B2620"/>
+          <text x="829" y="112" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">6 · Accumulate</text>
+          <text x="829" y="132" font-size="9.5" fill="#4A5A50" text-anchor="middle">proof-of-experience</text>
+          <text x="829" y="147" font-size="9.5" fill="#4A5A50" text-anchor="middle">(v3–v4)</text>
+        </g>
+        <!-- Arrows -->
+        <line x1="152" y1="132" x2="170" y2="132" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrC)"/>
+        <line x1="300" y1="132" x2="318" y2="132" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrC)"/>
+        <line x1="448" y1="132" x2="466" y2="132" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrC)"/>
+        <line x1="596" y1="132" x2="614" y2="132" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrC)"/>
+        <line x1="744" y1="132" x2="762" y2="132" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrC)"/>
+      </svg></div>
+    </figure>
+    <ol>
+      <li><strong>Join (OLP):</strong> a participant receives a Nostr keypair and forks a Git learning portfolio. Governance participation begins immediately through the SIP process.</li>
+      <li><strong>Learn (OLP):</strong> programs are delivered through the didactic core; work, evidence and reflections are committed and anchored. AI-supported learning tools write adaptive curriculum and reflection records into the same portfolio.</li>
+      <li><strong>Attest (OLP to CREDU):</strong> peer attestations begin inside the cohort. The first peer-attested CPD cross-reference, a session record on the deliverer's graph linked to an entry on the attendee's graph, is a primitive both layers share and no centralised platform offers.</li>
+      <li><strong>Qualify (CREDU entry gate):</strong> on attaining current membership of an IFAC-recognised professional body (or the equivalent gate as CREDU extends to other professions), the participant opens a pull request against <code>nodes.json</code>. Verification lands at one of three tiers depending on what the body publishes: deterministic directory lookup, geographic-only lookup, or member certificate with peer review by a cohort member.</li>
+      <li><strong>Practise (CREDU):</strong> the graph is live at a <code>credu.*</code> URL, exposes <code>llms.txt</code> and a stable JSON schema, and publishes its Nostr discovery event. AI agents can now find, read, verify and procure the practitioner with no login, API key or curated index. The practitioner directs the AI's work, signs for it and carries the liability: the profession governs the AI.</li>
+      <li><strong>Accumulate (CREDU v3–v4):</strong> DID-based signing, W3C Verifiable Credentials, and ultimately client-signed, zero-knowledge proof-of-experience records make the practitioner findable for what they have done, not only what they have learned, with CPD demoted to the entry condition.</li>
+    </ol>
+    <p>Throughout the pipeline, one Nostr keypair signs everything and one Git repository holds everything: the learning portfolio of stages 1 to 3 is the same repository, restructured against the CREDU schema, that becomes the professional graph of stages 4 to 6.</p>
+    <figure class="exhibit">
+      <figcaption><span><b>Exhibit D</b> · Agentic discovery and verification</span><span>No vendor anywhere in the path</span></figcaption>
+      <div class="diagram"><svg viewBox="0 0 830 420" role="img" aria-label="Sequence diagram: an AI agent queries Nostr relays for discovery events, fetches and reads the practitioner's graph, verifies the OpenTimestamps anchor against Bitcoin, then procures the practitioner" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Mono',monospace">
+        <defs>
+          <marker id="arrD" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1B2620"/></marker>
+          <marker id="arrDo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#DF7A12"/></marker>
+        </defs>
+        <!-- Lifelines -->
+        <line x1="95" y1="60" x2="95" y2="392" stroke="#B9C9B6" stroke-dasharray="4 4"/>
+        <line x1="320" y1="60" x2="320" y2="392" stroke="#B9C9B6" stroke-dasharray="4 4"/>
+        <line x1="555" y1="60" x2="555" y2="392" stroke="#B9C9B6" stroke-dasharray="4 4"/>
+        <line x1="755" y1="60" x2="755" y2="392" stroke="#B9C9B6" stroke-dasharray="4 4"/>
+        <!-- Actors -->
+        <rect x="20" y="12" width="150" height="44" fill="#E6EBE2" stroke="#1B2620"/>
+        <text x="95" y="39" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">AI agent</text>
+        <rect x="245" y="12" width="150" height="44" fill="#E6EBE2" stroke="#1B2620"/>
+        <text x="320" y="39" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Nostr relays</text>
+        <rect x="460" y="12" width="190" height="44" fill="#E6EBE2" stroke="#1B2620"/>
+        <text x="555" y="32" font-size="12" font-weight="600" fill="#1B2620" text-anchor="middle">Practitioner's graph</text>
+        <text x="555" y="48" font-size="10" fill="#4A5A50" text-anchor="middle">credu.*</text>
+        <rect x="690" y="12" width="130" height="44" fill="#F7F2E9" stroke="#DF7A12" stroke-width="1.5"/>
+        <text x="755" y="39" font-size="12" font-weight="600" fill="#8C4A05" text-anchor="middle">Bitcoin</text>
+        <!-- 1 -->
+        <text x="207" y="90" font-size="10" fill="#1B2620" text-anchor="middle">query kind:30078 discovery events</text>
+        <line x1="95" y1="100" x2="316" y2="100" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrD)"/>
+        <!-- 2 -->
+        <text x="207" y="128" font-size="10" fill="#4A5A50" text-anchor="middle">node URL, jurisdictions, NIP-05</text>
+        <line x1="320" y1="138" x2="99" y2="138" stroke="#4A5A50" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#arrD)"/>
+        <!-- 3 -->
+        <text x="325" y="166" font-size="10" fill="#1B2620" text-anchor="middle">fetch llms.txt + credu.json</text>
+        <line x1="95" y1="176" x2="551" y2="176" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrD)"/>
+        <!-- 4 -->
+        <text x="325" y="204" font-size="10" fill="#4A5A50" text-anchor="middle">structured records + evidence hashes</text>
+        <line x1="555" y1="214" x2="99" y2="214" stroke="#4A5A50" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#arrD)"/>
+        <!-- 5 -->
+        <text x="425" y="242" font-size="10" fill="#1B2620" text-anchor="middle">check OpenTimestamps anchor (block explorer)</text>
+        <line x1="95" y1="252" x2="751" y2="252" stroke="#1B2620" stroke-width="1.5" marker-end="url(#arrD)"/>
+        <!-- 6 -->
+        <text x="425" y="280" font-size="10" fill="#8C4A05" text-anchor="middle">hash existed at block height / timestamp</text>
+        <line x1="755" y1="290" x2="99" y2="290" stroke="#DF7A12" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#arrDo)"/>
+        <!-- 7 -->
+        <text x="325" y="330" font-size="11" font-weight="600" fill="#8C4A05" text-anchor="middle">procure the practitioner</text>
+        <line x1="95" y1="342" x2="551" y2="342" stroke="#DF7A12" stroke-width="2" marker-end="url(#arrDo)"/>
+        <!-- Footnote -->
+        <text x="415" y="384" font-size="10" fill="#4A5A50" text-anchor="middle">no login · no API key · no vendor index · no permission required</text>
+      </svg></div>
+    </figure>
+  </div>
+</section>
+
+<section class="entry" data-sec="05">
+  <div class="rail"><span class="folio">05</span><span>Governance</span><span class="sec-hash"></span></div>
+  <div class="body">
+    <h2>Governance and the public-good guarantee</h2>
+    <p>OLP's governance bootstrap (Council, SIP process, multisig treasury) governs the shared substrate. CREDU's registry review distributes from a sole reviewer in v1 to branch protection, org teams, CODEOWNERS and automated status checks in v2, so review scales through the cohort itself. Professional bodies are an entry-point criterion, not the customer; bodies that participate gain early-mover advantage, and over time recognition begins to run through members rather than only top-down through IFAC.</p>
+    <p>The whole stack is free, open source and openly licensed. Each professional graph is a self-hosted static site and each learning record a self-hosted repository, so the network scales to thousands of participants and their agents at negligible marginal cost, with no central server as a bottleneck and no point at which any operator can de-list, gate or extract. Monetisation sits deliberately outside the protocol: CREDU Academy teaches the technical fluency sovereignty requires, and the optional hosted anchoring service at credu.app runs at cost-recovery.</p>
+  </div>
+</section>
+
+<section class="entry" data-sec="06">
+  <div class="rail"><span class="folio">06</span><span>Delivery</span><span class="sec-hash"></span></div>
+  <div class="body">
+    <h2>Delivery: DPF NS Labs</h2>
+    <p>Digital Playhouse Foundation delivers the combined build through DPF NS Labs at Network School, with Australian cohorts participating remotely and onsite. The staged plan takes both layers to beta across 26 weeks:</p>
+    <table>
+      <thead><tr><th>Stage</th><th>Weeks</th><th>Milestones</th></tr></thead>
+      <tbody>
+        <tr><td>Establish</td><td>1–4</td><td>Operating presence, ICT infrastructure, project plan, cohort selection</td></tr>
+        <tr><td>Specify</td><td>5–8</td><td>Technical requirements and specifications published; OLP identity and records design set; credu-protocol organisation, template and registry schema committed</td></tr>
+        <tr><td>Build</td><td>9–13</td><td>Cohort identities and Git portfolios stood up, first Lightning tuition flows, credu-cli first cut anchoring evidence to Bitcoin, initial professional graphs, first peer-attested CPD cross-reference</td></tr>
+        <tr><td>Beta</td><td>14–26</td><td>Both protocols proven, integrated to beta scope and demonstrated, with a funding plan for continuation</td></tr>
+      </tbody>
+    </table>
+    <p>The cohort proves the protocol by using it: every member runs their own node on their own infrastructure, which is the evidence the architecture works at more than one node.</p>
+  </div>
+</section>
+
+<section class="entry" data-sec="07">
+  <div class="rail"><span class="folio">07</span><span>Conclusion</span><span class="sec-hash"></span></div>
+  <div class="body">
+    <h2>Conclusion</h2>
+    <p>Separately, OLP fixes who owns the learning record and CREDU fixes who owns the professional record. Combined, they close the pipeline between the two: one keypair, one growing repository, one trust root, from a learner's first anchored artefact to a practitioner an AI agent can discover, verify and procure.</p>
+    <div class="canonical">
+      <p>Be discoverable. Be trusted. Be procurable, on infrastructure you own.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>Digital Playhouse Foundation Ltd</span>
+    <span><a href="https://digitalplayhouse.org.au">digitalplayhouse.org.au</a> · <a href="https://credu.io">credu.io</a> · <a href="https://github.com/credu-protocol">github.com/credu-protocol</a></span>
+  </div>
+</footer>
+
+<script>
+// Live SHA-256 of the document and of each section: the CREDU anchoring
+// primitive, computed client-side with the Web Crypto API. Honest labelling:
+// these digests are computed in the browser and are not Bitcoin anchors.
+const enc = new TextEncoder();
+async function sha256hex(text){
+  const buf = await crypto.subtle.digest('SHA-256', enc.encode(text));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+(async ()=>{
+  try{
+    for(const sec of document.querySelectorAll('section.entry')){
+      const body = sec.querySelector('.body');
+      const slot = sec.querySelector('.sec-hash');
+      if(body && slot){
+        const h = await sha256hex(body.textContent.trim());
+        slot.textContent = h.slice(0,16) + '…';
+        slot.title = h;
+      }
+    }
+    const main = document.querySelector('main');
+    const full = await sha256hex(main.textContent.trim());
+    document.getElementById('docHash').textContent = full;
+  }catch(e){
+    document.getElementById('docHash').textContent = 'unavailable in this browser';
+  }
+})();
+</script>
+
+</body>
+</html>
