@@ -1,0 +1,515 @@
+<title>SkyLab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #F6F8FC;
+    --surface: #FFFFFF;
+    --surface-2: #EDF1F9;
+    --ink: #1B2540;
+    --muted: #525E7C;
+    --line: #D9E0EE;
+    --accent: #2B59C3;
+    --accent-soft: #E4EBFA;
+    --accent-contrast: #FFFFFF;
+    --amber: #A96208;
+    --amber-soft: #F7ECDC;
+    --good: #1E7A4D;
+    --sky-a: #DFE9FA;
+    --sky-b: #F6F8FC;
+    --star: #2B59C3;
+    --shadow: 0 1px 2px rgba(27,37,64,.05), 0 8px 28px rgba(27,37,64,.07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B1120;
+      --surface: #131B30;
+      --surface-2: #1A2440;
+      --ink: #E9EEFA;
+      --muted: #9DA9C7;
+      --line: #263351;
+      --accent: #85A8F2;
+      --accent-soft: #1D2A4C;
+      --accent-contrast: #0B1120;
+      --amber: #F0B364;
+      --amber-soft: #2A2338;
+      --good: #5BC98F;
+      --sky-a: #101A33;
+      --sky-b: #0B1120;
+      --star: #C9D8F7;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B1120;
+    --surface: #131B30;
+    --surface-2: #1A2440;
+    --ink: #E9EEFA;
+    --muted: #9DA9C7;
+    --line: #263351;
+    --accent: #85A8F2;
+    --accent-soft: #1D2A4C;
+    --accent-contrast: #0B1120;
+    --amber: #F0B364;
+    --amber-soft: #2A2338;
+    --good: #5BC98F;
+    --sky-a: #101A33;
+    --sky-b: #0B1120;
+    --star: #C9D8F7;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 {
+    font-family: "Bricolage Grotesque", "Arial Black", "Segoe UI", sans-serif;
+    line-height: 1.12;
+    text-wrap: balance;
+    margin: 0 0 .5em;
+  }
+  p { margin: 0 0 1em; }
+  a { color: var(--accent); }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+  .prose { max-width: 66ch; }
+  .eyebrow {
+    font-family: "Spline Sans Mono", ui-monospace, monospace;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  section { padding: 72px 0; }
+  section + section { border-top: 1px solid var(--line); }
+  .section-head { margin-bottom: 36px; }
+  .section-head h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; }
+  .section-head p.lede { font-size: 19px; color: var(--muted); max-width: 62ch; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: linear-gradient(180deg, var(--sky-a) 0%, var(--sky-b) 100%);
+    padding: 84px 0 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
+  @media (max-width: 820px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero h1 {
+    font-size: clamp(52px, 9vw, 96px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    margin-bottom: 18px;
+  }
+  .hero h1 .sky { color: var(--accent); }
+  .hero .sub { font-size: clamp(18px, 2.4vw, 22px); color: var(--muted); max-width: 54ch; margin-bottom: 28px; }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 999px; padding: 6px 14px;
+    font-size: 13.5px; font-weight: 600; color: var(--muted);
+  }
+  .badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 700;
+    border-radius: 10px; padding: 13px 24px; font-size: 16px;
+    transition: transform .12s ease;
+  }
+  .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .btn-primary { background: var(--accent); color: var(--accent-contrast); }
+  .btn-secondary { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+  .btn:hover { transform: translateY(-1px); }
+  .uplink { width: 100%; max-width: 420px; height: auto; display: block; margin: 0 auto; }
+  @media (prefers-reduced-motion: no-preference) {
+    .uplink .beam { stroke-dasharray: 4 7; animation: beamflow 1.6s linear infinite; }
+    @keyframes beamflow { to { stroke-dashoffset: -22; } }
+  }
+
+  /* ---------- Cards ---------- */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 860px) { .card-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .card-grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 24px 22px; box-shadow: var(--shadow);
+  }
+  .card h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 15.5px; margin: 0; }
+  .card .glyph {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; margin-bottom: 14px;
+  }
+  .card .glyph svg { width: 22px; height: 22px; }
+
+  /* ---------- Model diagram ---------- */
+  .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; }
+  @media (max-width: 860px) { .model-grid { grid-template-columns: 1fr; } }
+  .diagram { width: 100%; height: auto; display: block; }
+  .checklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .checklist li { display: grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: start; }
+  .checklist .tick {
+    width: 24px; height: 24px; border-radius: 50%; margin-top: 2px;
+    background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; font-weight: 800; font-size: 14px;
+  }
+  .checklist strong { display: block; }
+  .checklist span.d { color: var(--muted); font-size: 15.5px; }
+
+  /* ---------- Pricing ---------- */
+  .price-note {
+    background: var(--amber-soft); border: 1px solid var(--line);
+    border-radius: 12px; padding: 16px 20px; margin-bottom: 32px;
+    font-size: 15.5px; color: var(--ink);
+  }
+  .price-note strong { color: var(--amber); }
+  .price-block h3 {
+    font-size: 15px; font-family: "Spline Sans Mono", ui-monospace, monospace;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+    font-weight: 600; margin: 40px 0 16px;
+  }
+  .price-block h3:first-of-type { margin-top: 0; }
+  table.price {
+    width: 100%; border-collapse: collapse; background: var(--surface);
+    border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .table-scroll { overflow-x: auto; border-radius: 14px; }
+  table.price th, table.price td {
+    text-align: left; padding: 16px 20px; border-bottom: 1px solid var(--line);
+    vertical-align: top; font-size: 15.5px;
+  }
+  table.price tr:last-child td { border-bottom: none; }
+  table.price th {
+    font-family: "Spline Sans Mono", ui-monospace, monospace;
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600; background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+  }
+  td.amount, th.amount {
+    text-align: right; white-space: nowrap;
+    font-family: "Spline Sans Mono", ui-monospace, monospace;
+    font-variant-numeric: tabular-nums; font-weight: 600;
+  }
+  td .item { font-weight: 700; display: block; }
+  td .detail { color: var(--muted); font-size: 14.5px; display: block; margin-top: 3px; }
+  .tag {
+    display: inline-block; font-size: 11.5px; font-weight: 700;
+    font-family: "Spline Sans Mono", ui-monospace, monospace;
+    letter-spacing: .08em; text-transform: uppercase;
+    border-radius: 6px; padding: 2px 8px; margin-left: 8px; vertical-align: middle;
+  }
+  .tag-cost { background: var(--accent-soft); color: var(--accent); }
+  .tag-opt { background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); }
+  .fineprint { color: var(--muted); font-size: 13.5px; margin-top: 18px; max-width: 75ch; }
+
+  /* ---------- FAQ ---------- */
+  details {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 4px 20px; margin-bottom: 12px;
+  }
+  details summary {
+    cursor: pointer; font-weight: 700; padding: 14px 0; font-size: 16.5px;
+    list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after { content: "+"; color: var(--accent); font-size: 22px; font-weight: 400; flex-shrink: 0; }
+  details[open] summary::after { content: "–"; }
+  details summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+  details .a { color: var(--muted); padding: 0 0 16px; max-width: 70ch; }
+
+  /* ---------- Contact / footer ---------- */
+  .contact {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 18px; padding: 44px 40px; box-shadow: var(--shadow);
+    display: grid; grid-template-columns: 1.2fr .8fr; gap: 36px; align-items: center;
+  }
+  @media (max-width: 760px) { .contact { grid-template-columns: 1fr; padding: 32px 24px; } }
+  .contact h2 { font-size: clamp(26px, 3.6vw, 36px); }
+  .contact .mono { font-family: "Spline Sans Mono", ui-monospace, monospace; font-size: 15px; }
+  footer { padding: 36px 0 48px; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+</style>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">A Digital Playhouse Foundation project</p>
+      <h1><span class="sky">Sky</span>Lab</h1>
+      <p class="sub">A safe, separate, satellite-connected learning lab inside your school: enterprise-grade security at a fraction of enterprise cost, on a network built <em>for</em> learning, not locked against it.</p>
+      <div class="badge-row">
+        <span class="badge">Fully segregated from the school network</span>
+        <span class="badge">Enterprise-grade security, low cost</span>
+        <span class="badge">Hardware &amp; connection at cost</span>
+        <span class="badge">Not-for-profit delivery</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#pricing">See the pricing</a>
+        <a class="btn btn-secondary" href="#contact">Talk to us</a>
+      </div>
+    </div>
+    <svg class="uplink" viewBox="0 0 420 340" role="img" aria-label="Diagram of a Starlink dish beaming to a satellite above a school learning lab">
+      <circle cx="60" cy="50" r="2" fill="var(--star)" opacity=".55"></circle>
+      <circle cx="150" cy="26" r="1.6" fill="var(--star)" opacity=".45"></circle>
+      <circle cx="330" cy="60" r="2" fill="var(--star)" opacity=".5"></circle>
+      <circle cx="385" cy="120" r="1.6" fill="var(--star)" opacity=".4"></circle>
+      <circle cx="40" cy="140" r="1.6" fill="var(--star)" opacity=".4"></circle>
+      <!-- satellite -->
+      <g transform="translate(260 42)">
+        <rect x="-14" y="-8" width="28" height="16" rx="3" fill="var(--accent)"></rect>
+        <rect x="-56" y="-5" width="36" height="10" rx="2" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"></rect>
+        <rect x="20" y="-5" width="36" height="10" rx="2" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"></rect>
+      </g>
+      <!-- beam -->
+      <path class="beam" d="M258 60 L150 238" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4 7"></path>
+      <!-- ground -->
+      <line x1="20" y1="300" x2="400" y2="300" stroke="var(--line)" stroke-width="2"></line>
+      <!-- lab building -->
+      <g>
+        <rect x="80" y="252" width="150" height="48" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"></rect>
+        <text x="155" y="282" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="13" font-weight="600" fill="var(--accent)">SKYLAB</text>
+        <!-- dish -->
+        <g transform="translate(150 240) rotate(-28)">
+          <rect x="-16" y="-4" width="32" height="7" rx="3.5" fill="var(--accent)"></rect>
+          <rect x="-2" y="3" width="4" height="12" fill="var(--accent)"></rect>
+        </g>
+      </g>
+      <!-- school building, separate -->
+      <g>
+        <rect x="280" y="244" width="110" height="56" rx="6" fill="var(--surface-2)" stroke="var(--line)" stroke-width="2"></rect>
+        <text x="335" y="270" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="11" font-weight="600" fill="var(--muted)">SCHOOL</text>
+        <text x="335" y="288" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="11" font-weight="600" fill="var(--muted)">NETWORK</text>
+      </g>
+      <!-- deliberate gap marker -->
+      <g font-family="Spline Sans Mono, monospace" font-size="10" font-weight="600" fill="var(--muted)">
+        <line x1="240" y1="276" x2="270" y2="276" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2 4"></line>
+        <text x="255" y="322" text-anchor="middle">no connection, by design</text>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">The problem</p>
+      <h2>School networks are locked down. That's the point, and the problem.</h2>
+    </div>
+    <div class="prose">
+      <p>Every school network in Australia is locked down, and rightly so: it carries student records, staff systems and thousands of devices, and it has to be protected. But the same lockdown means students can never touch the technology the real world runs on. No connecting an IoT device. No standing up a VR rig. No running a server, hosting a website from scratch, or seeing what a blockchain node actually does. Students graduate having <em>used</em> devices for years without ever learning how any of it works.</p>
+      <p>The answer isn't to loosen the school network. It's to build a second, smaller one next to it, with its own connection, its own rules, and its own enterprise-grade safety controls.</p>
+    </div>
+  </div>
+</section>
+
+<section id="model">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">The model</p>
+      <h2>A school within a school</h2>
+      <p class="lede">SkyLab is a dedicated learning space with its own satellite internet connection, physically and logically separate from school infrastructure.</p>
+    </div>
+    <div class="model-grid">
+      <ul class="checklist">
+        <li><span class="tick">1</span><div><strong>Its own connection from the sky</strong><span class="d">A Starlink dish on the lab roof means the lab never touches the school's network, filtering or firewall. Nothing in the lab can reach school systems, and nothing students do can affect them.</span></div></li>
+        <li><span class="tick">2</span><div><strong>A hardened, managed gateway</strong><span class="d">An enterprise-grade Wi-Fi 7 router (GL.iNet Flint series) configured by us: network segmentation with VLANs, DNS-level filtering and malware blocking, VPN with kill-switch, and full traffic visibility for supervising teachers.</span></div></li>
+        <li><span class="tick">3</span><div><strong>A supervised learning space</strong><span class="d">One room, clearly bounded, and always staffed. Only teachers holding a current Working With Children Check are issued lab credentials, and students work under supervision and a lab-specific acceptable use agreement: real freedom inside a real fence.</span></div></li>
+        <li><span class="tick">4</span><div><strong>Remote support, if you want it</strong><span class="d">We can monitor, patch and manage the lab remotely, and protect every lab device with managed endpoint protection, so no extra load lands on your IT staff.</span></div></li>
+      </ul>
+      <svg class="diagram" viewBox="0 0 440 330" role="img" aria-label="The school network and the SkyLab network shown as two separate circles that never touch">
+        <circle cx="140" cy="165" r="110" fill="var(--surface-2)" stroke="var(--line)" stroke-width="2"></circle>
+        <text x="140" y="150" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="17" font-weight="700" fill="var(--muted)">School network</text>
+        <text x="140" y="176" text-anchor="middle" font-family="Figtree, sans-serif" font-size="13" fill="var(--muted)">records · staff systems</text>
+        <text x="140" y="194" text-anchor="middle" font-family="Figtree, sans-serif" font-size="13" fill="var(--muted)">locked down, protected</text>
+        <circle cx="330" cy="165" r="86" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"></circle>
+        <text x="330" y="150" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="17" font-weight="700" fill="var(--accent)">SkyLab</text>
+        <text x="330" y="176" text-anchor="middle" font-family="Figtree, sans-serif" font-size="13" fill="var(--muted)">own Starlink uplink</text>
+        <text x="330" y="194" text-anchor="middle" font-family="Figtree, sans-serif" font-size="13" fill="var(--muted)">open for learning, safely</text>
+        <line x1="252" y1="80" x2="252" y2="250" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="3 6"></line>
+        <text x="252" y="290" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="11" font-weight="600" fill="var(--muted)">separated by design: no shared cable, no shared risk</text>
+        <path d="M330 79 L330 34" stroke="var(--accent)" stroke-width="2" stroke-dasharray="3 5"></path>
+        <g transform="translate(330 24)">
+          <rect x="-9" y="-5" width="18" height="10" rx="2" fill="var(--accent)"></rect>
+          <rect x="-34" y="-3" width="20" height="6" rx="1.5" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"></rect>
+          <rect x="14" y="-3" width="20" height="6" rx="1.5" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"></rect>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="learning">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">What opens up</p>
+      <h2>Real-world technology, hands on</h2>
+      <p class="lede">Everything below is impossible on a standard school network. In SkyLab, it's the curriculum.</p>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v4M12 18v4M2 12h4M18 12h4"></path></svg></div>
+        <h3>Internet of Things</h3>
+        <p>Connect sensors, microcontrollers and smart devices to a live network, then build, break and fix real systems.</p>
+      </div>
+      <div class="card">
+        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="8" width="18" height="9" rx="4"></rect><circle cx="8.5" cy="12.5" r="1.4" fill="currentColor" stroke="none"></circle><circle cx="15.5" cy="12.5" r="1.4" fill="currentColor" stroke="none"></circle></svg></div>
+        <h3>VR &amp; immersive tech</h3>
+        <p>Headsets need open, fast, low-latency connections that school networks block. SkyLab gives them one.</p>
+      </div>
+      <div class="card">
+        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="7" rx="2"></rect><rect x="3" y="13" width="18" height="7" rx="2"></rect><path d="M7 7.5h.01M7 16.5h.01"></path></svg></div>
+        <h3>Servers &amp; nodes</h3>
+        <p>Host a website, run a game server, explore blockchain technology, and learn what "the cloud" actually is.</p>
+      </div>
+      <div class="card">
+        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"></path></svg></div>
+        <h3>Cybersecurity practice</h3>
+        <p>Watch real traffic, configure real firewalls, and learn defence by doing it, all inside a contained network.</p>
+      </div>
+      <div class="card">
+        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 7h8M8 11h8M8 15h5"></path></svg></div>
+        <h3>Device administration</h3>
+        <p>Students get admin rights on lab devices, installing, configuring and maintaining machines end to end.</p>
+      </div>
+      <div class="card">
+        <div class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 19V9l7-5 7 5v10"></path><path d="M9 19v-5h6v5"></path></svg></div>
+        <h3>School within a school</h3>
+        <p>The lab runs like a small organisation: students take roles, keep it running, and own the outcomes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="safety">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Duty of care</p>
+      <h2>Open for learning. Closed to everything else.</h2>
+      <p class="lede">"Separate" never means "unsupervised". Every SkyLab is a supervised environment with enterprise-grade safeguards at a fraction of enterprise cost, and only teachers holding a current Working With Children Check are issued credentials.</p>
+    </div>
+    <div class="card-grid">
+      <div class="card"><h3>Physical &amp; logical segregation</h3><p>No cable, no bridge, no shared credential between SkyLab and school systems. An incident in the lab stays in the lab.</p></div>
+      <div class="card"><h3>DNS filtering &amp; malware blocking</h3><p>Gateway-level filtering (AdGuard-class) blocks inappropriate content and known-malicious domains for every device, every time.</p></div>
+      <div class="card"><h3>Full traffic visibility</h3><p>Supervising teachers can see what every lab device is doing, live. Freedom with a flight recorder.</p></div>
+      <div class="card"><h3>Endpoint protection</h3><p>Optional managed protection on every lab device: the same class of tooling businesses use, taught as part of the learning.</p></div>
+      <div class="card"><h3>Supervised, credentialed access</h3><p>Lab time is always staffed. Credentials are issued only to teachers holding a current Working With Children Check, and students and parents sign a lab-specific acceptable use agreement.</p></div>
+      <div class="card"><h3>Remote management</h3><p>We can patch, monitor and lock down the lab remotely, and shut the uplink off entirely outside lab hours.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Pricing</p>
+      <h2>Everything at cost. Nothing hidden.</h2>
+      <p class="lede">Digital Playhouse Foundation is a not-for-profit. Hardware is supplied at retail or landed cost (you're welcome to buy it yourself) and you only pay for the time it takes to set up safely. The result is enterprise-grade security for less than most schools spend on a single software subscription.</p>
+    </div>
+
+    <div class="price-note"><strong>Why a residential Starlink plan?</strong> Because the lab is deliberately <em>not</em> part of the school. The connection serves one room, is billed like a household, and caps at $150/month, a fraction of the cost of a second enterprise link.</div>
+
+    <div class="price-block">
+      <h3>One-off: hardware &amp; setup</h3>
+      <div class="table-scroll">
+        <table class="price">
+          <tr><th>Item</th><th class="amount">AUD</th></tr>
+          <tr><td><span class="item">Starlink Standard Kit <span class="tag tag-cost">at cost</span></span><span class="detail">Dish, Gen 3 router, kickstand, cabling (current JB Hi-Fi retail)</span></td><td class="amount">$499</td></tr>
+          <tr><td><span class="item">Secure lab gateway <span class="tag tag-cost">at cost</span></span><span class="detail">Enterprise-grade GL.iNet Flint-series Wi-Fi 7 router with VLANs, VPN, filtering and 10G ports (indicative landed cost)</span></td><td class="amount">~$580</td></tr>
+          <tr><td><span class="item">Site setup &amp; secure configuration</span><span class="detail">Install, mounting, hardened network build, teacher handover; quoted per site after a short scoping visit</span></td><td class="amount">POA</td></tr>
+        </table>
+      </div>
+
+      <h3>Monthly: connection &amp; care</h3>
+      <div class="table-scroll">
+        <table class="price">
+          <tr><th>Service</th><th class="amount">AUD / month</th></tr>
+          <tr><td><span class="item">Starlink Residential plan</span><span class="detail">Unlimited data, paid directly to Starlink at maximum plan pricing</span></td><td class="amount">$150</td></tr>
+          <tr><td><span class="item">Remote support &amp; management <span class="tag tag-opt">optional</span></span><span class="detail">Monitoring, patching, config changes, uplink scheduling, teacher helpdesk</span></td><td class="amount">$60</td></tr>
+          <tr><td><span class="item">Managed endpoint protection <span class="tag tag-opt">optional</span></span><span class="detail">Per lab device, per month; includes alerting and remediation</span></td><td class="amount">$8 / device</td></tr>
+        </table>
+      </div>
+      <p class="fineprint">Prices indicative as at August 2026 and passed through at cost: hardware pricing follows the retailer or supplier, and Starlink pricing follows Starlink. Setup is quoted per site because every roof, room and region is different. Example: a 20-device lab with full support runs about $370/month plus one-off hardware and setup.</p>
+    </div>
+  </div>
+</section>
+
+<section id="funding">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Funding pathways</p>
+      <h2>Ways to fund a SkyLab</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card"><h3>First Nations connectivity grants</h3><p>Commonwealth and state programs fund connectivity and digital-inclusion projects for First Nations communities and schools, a strong fit for remote and regional SkyLabs.</p></div>
+      <div class="card"><h3>Government &amp; regional programs</h3><p>Digital literacy, STEM and regional connectivity grant rounds open regularly. As a not-for-profit, DPHF can auspice applications alongside your school.</p></div>
+      <div class="card"><h3>P&amp;C and community funding</h3><p>The one-off cost of a SkyLab sits comfortably inside a typical P&amp;C fundraising year, and the monthly cost is less than most single-software subscriptions schools already carry.</p></div>
+    </div>
+    <p class="fineprint">Note: Starlink itself supplies hardware directly only for emergency and disaster response, so school labs are funded through grants, school budgets or community fundraising, with DPHF handling supply at cost.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Questions principals ask</p>
+      <h2>FAQ</h2>
+    </div>
+    <details>
+      <summary>Does this touch our school network or Department systems at all?</summary>
+      <div class="a">No. That's the entire design. SkyLab has its own internet connection from the sky, its own router, and its own devices. There is no cable, Wi-Fi bridge or shared login between the two networks, so an issue in the lab cannot reach student records or staff systems.</div>
+    </details>
+    <details>
+      <summary>Is a residential Starlink plan allowed for this?</summary>
+      <div class="a">The lab is set up as a standalone residential-style service precisely because it isn't part of the school's ICT estate; it serves one dedicated learning space. We'll walk through the arrangement with you during scoping so the billing and ownership structure suits your school and sector requirements.</div>
+    </details>
+    <details>
+      <summary>What about student safety online?</summary>
+      <div class="a">SkyLab is a supervised environment. Credentials are issued only to teachers holding a current Working With Children Check, the gateway enforces DNS-level filtering and malware blocking for every device, teachers have live visibility of all traffic, and the uplink can be scheduled to switch off outside lab hours. Students also sign a lab-specific acceptable use agreement. It's more observable than a typical home connection, by design.</div>
+    </details>
+    <details>
+      <summary>Who owns the equipment?</summary>
+      <div class="a">Your school does. Hardware is purchased at cost (or you can buy it yourself at retail) and it stays yours. DPHF charges only for setup time and any ongoing support you choose.</div>
+    </details>
+    <details>
+      <summary>What does "blockchain technology education" involve?</summary>
+      <div class="a">It's a networking and distributed-systems exercise, purely about the technology: students see how a global peer-to-peer system synchronises, verifies and stays online, the same skills that underpin every distributed system they'll meet in industry.</div>
+    </details>
+    <details>
+      <summary>What does the school need to provide?</summary>
+      <div class="a">A dedicated room, a roof or wall spot with clear sky view for the dish, a standard power point, and a supervising teacher. We handle the rest.</div>
+    </details>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <div>
+        <h2>Start with a conversation</h2>
+        <p style="color: var(--muted); max-width: 50ch;">Tell us about your school and the space you have in mind. We'll scope the site, quote the setup, and map the funding options. No cost, no obligation.</p>
+      </div>
+      <div>
+        <p class="mono" style="margin-bottom:6px;"><strong>Digital Playhouse Foundation</strong></p>
+        <p class="mono" style="margin-bottom:20px;"><a href="mailto:foundation@digitalplayhouse.com.au">foundation@digitalplayhouse.com.au</a></p>
+        <a class="btn btn-primary" href="mailto:foundation@digitalplayhouse.com.au?subject=SkyLab%20enquiry">Email us about SkyLab</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>SkyLab, a Digital Playhouse Foundation project</span>
+    <span>Real-world technology learning, safely separate. Prices indicative, August 2026.</span>
+  </div>
+</footer>
